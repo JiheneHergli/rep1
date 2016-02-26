@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+
+
+
+ <h:form id="dataTableDevises">
+                    <p:dataTable id="tbl" var="devise" value="#{deviseBean.listeDevises}"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                resizableColumns="true" paginator="true" rows="10" style="margin-bottom:20px"
+                                scrollable="true" >
+                               
+                        <f:facet name="header">
+                            Liste de Devises
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID" />
+                            </f:facet>
+                            <h:outputText value="#{devise.idDevise}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Libelle"/>
+                            </f:facet>
+                            <h:outputText value="#{devise.libelle}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Abrégé" />
+                            </f:facet>
+                            <h:outputText value="#{devise.abrege}" />
+                        </p:column>
+                        <p:column>
+                        <f:facet name="header">  
+                                <h:outputText value="Options" />  
+                        </f:facet>
+                        <p:commandLink id="delete" styleClass="ui-icon ui-icon-trash" >
+                                <f:setPropertyActionListener value="#{value}" target="#{deviseBean.value}" />
+                                <p:confirm  header="Confirmation" message="Voulez-vous Supprimer cet élément??" icon="ui-icon-alert"/>
+                        </p:commandLink>               
+                </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" showEffect="fade" id="confirmDialog" widgetVar="confirmation">
+                        <p:commandButton value="Oui"   icon="ui-icon-check"  onClick="confirmation.hide();"
+                                         action="#{deviseBean.supprimer}"/>
+                         <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                   </p:confirmDialog>
+    </h:form>
+    		
+	</ui:define>
+</ui:composition>

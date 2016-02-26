@@ -1,0 +1,1263 @@
+
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<div style="background-color: #eee; height: 50px;"></div>
+		<h:form></h:form>
+
+		<h:form id="form1" enctype="multipart/form-data">
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+
+			<p:fieldset legend="Nouveau personnel  " icon="ui-icon-document"
+				toggleable="true" toggleSpeed="500">
+
+
+
+				<p:panel>
+
+					<h:panelGrid columns="2" cellpadding="10">
+
+
+						<h:outputLabel for="nom" title="Nom" value="Nom:" />
+						<p:keyboard value="#{personnelBean.personnel.nom}" />
+						<h:outputLabel value="Prenom:" />
+						<p:keyboard value="#{personnelBean.personnel.prenom}" />
+
+					</h:panelGrid>
+
+					<p:fieldset legend="l'information  du publique "
+						icon="ui-icon-document" toggleable="true" toggleSpeed="500">
+
+
+
+
+
+
+						<p:panelGrid id="i1">
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Coordonnées"
+										style="color: #23A6DA;font-size:20px" />
+									<h:panelGrid columns="2" cellpadding="10">
+
+										<h:outputLabel value="tél pro" />
+
+										<p:inputMask id="phone"
+											value="#{personnelBean.personnel.tél_pro}" required="true"
+											mask="(+999) 99-999-999" />
+
+										<h:outputLabel value="Email" />
+										<p:inputText value="#{personnelBean.personnel.email_pro}"
+											id="email" placeholder="Enter a valid email address"
+											type="email" required="true">
+
+
+
+											<f:validateRegex
+												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+										</p:inputText>
+										<h:message for="email" style="color:red" />
+										<h:outputLabel value=" " style="color: #32789D;" />
+
+										<h:outputLabel value="Fax" />
+
+
+										<p:inputMask value="#{personnelBean.personnel.fax}"
+											required="true" mask="(+999) 99-999-999" />
+
+
+
+									</h:panelGrid>
+
+
+
+								</p:column>
+								<p:column>
+
+
+									<h:outputLabel value="Position"
+										style="color: #23A6DA;font-size:20px;" />
+
+									<h:panelGrid columns="2" cellpadding="10">
+										<h:outputLabel value="departement" />
+										<p:selectOneMenu
+											value="#{personnelBean.personnel.departement}">
+											<f:selectItem itemLabel="Select One" itemValue="" />
+											<f:selectItem itemLabel="Technique" itemValue="Technique" />
+											<f:selectItem itemLabel="Rehcherche et Développement"
+												itemValue="Rehcherche et Développement" />
+											<f:selectItem itemLabel="Finance et Administration"
+												itemValue="Finance et administration et Administration" />
+											<f:selectItem itemLabel="Commercial et Marketing"
+												itemValue="Commercial et Marketing" />
+
+										</p:selectOneMenu>
+
+
+										<h:outputLabel value="emploi" />
+										<p:inputText value="#{personnelBean.personnel.emploi}" />
+
+
+
+									</h:panelGrid>
+
+
+
+								</p:column>
+
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Contrat"
+										style="color: #23A6DA;font-size:20px" />
+
+									<h:panelGrid columns="2" cellpadding="10">
+
+										<h:outputLabel value="Type" />
+
+
+										<p:selectOneMenu value="#{personnelBean.personnel.contrat}">
+											<f:selectItem itemLabel="Select One" itemValue="" />
+											<f:selectItem itemLabel="CDD / short term contract"
+												itemValue="CDD / short term contract" />
+											<f:selectItem itemLabel="ALTERNANCE" itemValue="ALTERNANCE" />
+											<f:selectItem
+												itemLabel="CDD contrat local / short term local contract"
+												itemValue="CDD contrat local / short term local contract" />
+											<f:selectItem itemLabel="CVP" itemValue="CVP" />
+											<f:selectItem itemLabel="CDI / unlimited contract"
+												itemValue="CDI / unlimited contract" />
+											<f:selectItem
+												itemLabel=" CDI contrat local / unlimited local contract"
+												itemValue=" CDI contrat local / unlimited local contract" />
+											<f:selectItem itemLabel="VIE" itemValue="VIE" />
+
+
+										</p:selectOneMenu>
+
+
+									</h:panelGrid>
+
+								</p:column>
+								<p:column>
+									<h:outputLabel value="Autres informations"
+										style="color: #23A6DA;font-size:20px" />
+									<h:panelGrid columns="2" cellpadding="10">
+										<p:inputTextarea rows="10" cols="50"
+											value="#{personnelBean.personnel.autres_info}" id="keyword" />
+										<p:watermark for="keyword"
+											value="saisir d'autres informations " />
+									</h:panelGrid>
+
+								</p:column>
+
+							</p:row>
+						</p:panelGrid>
+
+
+
+					</p:fieldset>
+
+					<p:fieldset legend="Renseignements personnels"
+						icon="ui-icon-document" toggleable="true" toggleSpeed="500">
+						<p:growl id="m" showDetail="true" />
+						<p:growl id="mss" showDetail="true" />
+						<p:panelGrid id="idPanelAddUsers">
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Citoyenneté et autres infos"
+										style="color: #23A6DA;font-size:20px;" />
+
+
+									<h:panelGrid columns="2" cellpadding="10">
+
+
+										<h:outputLabel value="Nationnalité" />
+
+										<p:inputText value="#{personnelBean.personnel.nationnalité}"
+											required="true" />
+										<h:outputLabel value="Cin" />
+
+
+
+										<p:inputText id="cin" value="#{personnelBean.personnel.cin}"
+											required="true" requiredMessage="Please enter a  number .">
+											<f:convertNumber />
+											<p:ajax event="change" listener="#{personnelBean.length}"
+												update=":form1:mss:"></p:ajax>
+
+										</p:inputText>
+
+										<h:message for="cin" value="Please enter a  number "
+											style="color:red" />
+										<h:outputLabel value=" " style="color: #32789D;" />
+
+										<h:outputLabel value="numero de compte bancaire" />
+
+										<p:inputText
+											value="#{personnelBean.personnel.num_compte_bancaire}"
+											required="true" requiredMessage="Please enter a  number .">
+
+											<f:convertNumber />
+											<p:ajax event="change" listener="#{personnelBean.length1}"
+												update=":form1:m:"></p:ajax>
+										</p:inputText>
+
+
+
+									</h:panelGrid>
+
+
+								</p:column>
+								<p:column>
+
+
+									<h:outputLabel value="Coordonnées"
+										style="color: #23A6DA;font-size:20px;" />
+
+									<h:panelGrid columns="2" cellpadding="10">
+										<h:outputLabel value="Rue" />
+										<p:inputText value="#{personnelBean.personnel.rue}"
+											required="true" />
+										<h:outputLabel value="Ville" />
+										<p:inputText value="#{personnelBean.personnel.ville}"
+											required="true" />
+
+									</h:panelGrid>
+
+
+								</p:column>
+
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Statut"
+										style="color: #23A6DA;font-size:20px" />
+									<h:panelGrid columns="2" cellpadding="10">
+										<h:outputLabel value="Sexe" />
+										<p:selectOneMenu value="#{personnelBean.personnel.sexe}">
+											<f:selectItem itemLabel="Select One" itemValue="" />
+											<f:selectItem itemLabel="Femme" itemValue="Femme" />
+											<f:selectItem itemLabel="Homme" itemValue="Homme" />
+										</p:selectOneMenu>
+										<h:outputLabel value="Etat civil" />
+										<p:selectOneMenu value="#{personnelBean.personnel.etat_civil}">
+											<f:selectItem itemLabel="Select One" itemValue="" />
+											<f:selectItem itemLabel="Célibataire" itemValue="Célibataire" />
+											<f:selectItem itemLabel="Marié(e)" itemValue="Marié(e)" />
+											<f:selectItem itemLabel="veuf" itemValue="veuf" />
+											<f:selectItem itemLabel="Divorcé(e)" itemValue="Divorcé(e)" />
+
+										</p:selectOneMenu>
+										<h:outputLabel value="nbr des enfants" />
+										<p:keyboard value="#{personnelBean.personnel.nbr_enfant}"
+											style="margin-left:5px;" showMode="button" keypadOnly="true" />
+									</h:panelGrid>
+
+								</p:column>
+								<p:column>
+
+									<h:outputLabel value="Naissance"
+										style="color: #23A6DA;font-size:20px;" />
+									<h:panelGrid columns="2" cellpadding="10"
+										style="margin-top:30px">
+
+										<h:outputLabel value="Date de naissance " />
+
+										<p:calendar showOn="button" pattern="yyyy-mm-dd"
+											value="#{personnelBean.personnel.date_naissance}"
+											effect="drop" />
+										<h:outputLabel value="Ville de naissance " />
+										<p:inputText
+											value="#{personnelBean.personnel.ville_naissance}"
+											required="true" />
+
+									</h:panelGrid>
+
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+
+					</p:fieldset>
+
+					<p:fieldset legend="Ajouter un diplome  " icon="ui-icon-document"
+						toggleable="true" toggleSpeed="500">
+
+
+
+
+						<h:panelGrid columns="2" cellpadding="10">
+
+
+							<h:outputLabel value="Année" />
+							<p:inputText value="#{personnelBean.dip.annee}" />
+
+							<h:outputLabel value="Dénomination" />
+							<p:inputText value="#{personnelBean.dip.denomination}" />
+
+							<h:outputLabel value="Etablissement" />
+							<p:inputText value="#{personnelBean.dip.etablissement}" />
+
+							<h:outputLabel value="Niveau" />
+							<p:inputText value="#{personnelBean.dip.niveau}" />
+
+						</h:panelGrid>
+						<p:commandButton value="save" icon="ui-icon-check"
+							action="#{personnelBean.createdip()}" update=":form1:"
+							style="color: #23A6DA;" />
+
+
+						<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+							action="#{personnelBean.updatedip()}" update=":form1:"
+							style="color: #23A6DA;" />
+						<p:commandButton value="Delete" icon="ui-icon-trash"
+							action="#{personnelBean.deletedip()}" update=":form1:"
+							style="color: #23A6DA;" />
+						<p:button type="Reset" icon="ui-icon-refresh" value="Reset"
+							style="color: #23A6DA;" />
+
+						<p:spacer style="margin-bottom:3%;" />
+						<p:dataTable var="dip" value="#{personnelBean.diplomes}" rows="5"
+							paginator="true"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,15" id="pptable" selectionMode="single"
+							widgetVar="dipTable" selection="#{personnelBean.dipSelected}"
+							rowKey="#{dip.iddiplome}">
+							<p:ajax event="rowSelect"
+								listener="#{personnelBean.onRowSelect2(rowSelect)}"
+								update=":form1" />
+
+							<f:facet name="header">
+								<h:outputText value="Liste des diplomes  "
+									style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+									<h:outputText value="Search all fields:" />
+									<p:inputText id="globalFilter"
+										onkeyup="PF('dipTable').filter()" style="width:150px"
+										placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column headerText="ID" filterBy="#{dip.iddiplome}"
+								sortBy="#{dip.iddiplome}" filterMatchMode="exact"
+								footerText=" ID exacte">
+                    <h:outputText value="#{dip.iddiplome}" />
+                </p:column>
+    
+
+                <p:column headerText="Année" filterBy="#{dip.annee}"
+								sortBy="#{dip.annee}" filterMatchMode="exact"
+								footerText="type exacte">
+                    <h:outputText value="#{dip.annee}" />
+                </p:column>
+
+
+                <p:column headerText="Denomination"
+								filterBy="#{dip.denomination}" sortBy="#{dip.denomination}"
+								filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.denomination}" />
+                </p:column>
+
+                <p:column headerText="Etablissement"
+								filterBy="#{dip.etablissement}" sortBy="#{dip.etablissement}"
+								filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.etablissement}" />
+                </p:column>
+
+    <p:column headerText="Niveau" filterBy="#{dip.niveau}"
+								sortBy="#{dip.niveau}" filterMatchMode="exact"
+								footerText="type exacte">
+                    <h:outputText value="#{dip.niveau}" />
+                </p:column>
+        
+					<f:facet name="footer">
+				
+                En total on a #{personnelBean.dips.size()} diplomes 
+              </f:facet>
+
+						</p:dataTable>
+
+
+
+					</p:fieldset>
+
+
+
+
+
+					<p:fieldset legend="Ajouter un emploi précédent   "
+						icon="ui-icon-document" toggleable="true" toggleSpeed="500">
+
+
+
+
+						<h:panelGrid columns="2" cellpadding="10">
+
+							<h:outputLabel value="Entreprise" />
+							<p:inputText value="#{personnelBean.emploiprec.entreprise}" />
+
+
+							<h:outputLabel value="Poste" />
+							<p:inputText value="#{personnelBean.emploiprec.poste}" />
+
+							<h:outputLabel value="Contrat" />
+							<p:inputText value="#{personnelBean.emploiprec.contrat}" />
+
+							<h:outputLabel value="Date Début " />
+							<p:calendar showOn="button"
+								value="#{personnelBean.emploiprec.date_deb}" effect="drop" />
+
+
+							<h:outputLabel value="Date Fin " />
+
+							<p:calendar showOn="button"
+								value="#{personnelBean.emploiprec.date_ffin}" effect="drop" />
+							<h:outputLabel value="Description" />
+
+							<p:inputTextarea rows="6" cols="80"
+								value="#{personnelBean.emploiprec.description}" id="keyword1" />
+							<p:watermark for="keyword1" value="saisir un commentaire" />
+
+						</h:panelGrid>
+
+						<p:commandButton value="save" icon="ui-icon-check"
+							action="#{personnelBean.createemploiprec()}" update=":form1:"
+							style="color: #23A6DA;" />
+						<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+							action="#{personnelBean.updateemploiprec()}" update=":form1:"
+							style="color: #23A6DA;" />
+						<p:commandButton value="Delete" icon="ui-icon-trash"
+							action="#{personnelBean.deleteemploiprec()}" update=":form1:"
+							style="color: #23A6DA;" />
+						<p:button type="Reset" icon="ui-icon-refresh" value="Reset"
+							style="color: #23A6DA;" />
+						<p:spacer style="margin-bottom:3%;" />
+
+
+
+
+						<p:dataTable var="emploiprec"
+							value="#{personnelBean.emploipreces}" rows="5" paginator="true"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,15" id="ptable9" 
+							widgetVar="emploiprecTable" 
+selection="#{personnelBean.emploiprecSelected}"
+selectionMode="single" rowKey="#{emploiprec.idemploi}">
+							
+<p:ajax event="rowSelect" listener="#{personnelBean.onRowSelect1()}" update=":form1" />
+							<f:facet name="header">
+								<h:outputText value="Liste des emplois précédents "
+									style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                <p:outputPanel>
+									<h:outputText value="Search all fields:" />
+									<p:inputText id="globalFilter"
+										onkeyup="PF('emploiprecTable').filter()" style="width:150px"
+										placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+	
+
+                <p:column headerText="Entreprise"
+								filterBy="#{emploiprec.entreprise}"
+								sortBy="#{emploiprec.entreprise}" filterMatchMode="exact"
+								footerText="type exacte">
+                    <h:outputText value="#{emploiprec.entreprise}" />
+                </p:column>
+
+
+                <p:column headerText="Poste"
+								filterBy="#{emploiprec.poste}" sortBy="#{emploiprec.poste}"
+								filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.poste}" />
+                </p:column>
+
+                <p:column headerText="Contrat"
+								filterBy="#{emploiprec.contrat}" sortBy="#{emploiprec.contrat}"
+								filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.contrat}" />
+                </p:column>
+
+    <p:column headerText="Description"
+								filterBy="#{emploiprec.description}"
+								sortBy="#{emploiprec.description}" filterMatchMode="exact"
+								footerText="type exacte">
+                    <h:outputText value="#{emploiprec.description}" />
+                </p:column>
+
+        
+  <p:column headerText="Date Debut" filterBy="#{emploiprec.date_deb}"
+								sortBy="#{emploiprec.date_deb}" filterMatchMode="exact"
+								footerText="type exacte">
+                    <h:outputText value="#{emploiprec.date_deb}">
+
+								</h:outputText>
+                </p:column>
+
+
+
+  <p:column headerText="Date Fin" filterBy="#{emploiprec.date_ffin}"
+								sortBy="#{emploiprec.date_ffin}" filterMatchMode="exact"
+								footerText="type exacte">
+                    <h:outputText value="#{emploiprec.date_ffin}">
+
+								</h:outputText>
+                </p:column>
+
+							<f:facet name="footer">
+				
+                En total on a #{personnelBean.emploipreces.size()} emplois precedents 
+              </f:facet>
+
+						</p:dataTable>
+
+
+
+					</p:fieldset>
+
+
+
+
+					<p:fieldset legend="Ajouter des documents    "
+						icon="ui-icon-document" toggleable="true" toggleSpeed="500">
+
+						<p:growl id="messges" showDetail="true" />
+						<p:fileUpload value="#{fileBean.file}"
+							fileUploadListener="#{fileBean.upload}" multiple="true"
+							update=":form1:messges" />
+
+
+
+
+					</p:fieldset>
+
+
+					<p:separator />
+				</p:panel>
+
+				<p:commandButton value="save" icon="ui-icon-check"
+					action="#{personnelBean.createpersonnel()}" update=":form1:"
+					style="color: #23A6DA;" />
+				<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{personnelBean.updatepersonnel()}" update=":form1:"
+					style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{personnelBean.deletepersonnel()}" update=":form1:"
+					style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"
+					style="color: #23A6DA;" />
+			</p:fieldset>
+			<p:spacer style="margin-bottom:3%;" />
+
+			<p:dataTable var="personnel" value="#{personnelBean.personnels}"
+				rows="5" paginator="true"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" id="ptable" selectionMode="single"
+				widgetVar="PersonnelTable"
+				selection="#{personnelBean.personnelSelected}"
+				rowKey="#{personnel.idpersonnel}">
+				<p:ajax event="rowSelect"
+					listener="#{personnelBean.onRowSelect(rowSelect)}" update=":form1"
+					style="margin-left:20px;margin-right:20px;" />
+
+				<f:facet name="header">
+					<h:outputText value="Liste des personnels"
+						style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+						<h:outputText value="Search all fields:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('PersonnelTable').filter()" style="width:150px"
+							placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+				<p:column sortBy="#{personnel.idpersonnel}"
+					filterBy="#{personnel.idpersonnel}">
+					<f:facet name="header">
+						<h:outputText value="id" style=" color: #23A6DA" />
+					</f:facet>
+					<h:outputText value="#{personnel.idpersonnel}" />
+
+				</p:column>
+				<p:column sortBy="#{personnel.nom}" filterBy="#{personnel.nom}">
+					<f:facet name="header">
+						<h:outputText value="Nom" style=" color: #23A6DA" />
+					</f:facet>
+
+					<h:outputText value="#{personnel.nom}" />
+				</p:column>
+				<p:column sortBy="#{personnel.prenom}"
+					filterBy="#{personnel.prenom}">
+					<f:facet name="header">
+						<h:outputText value="Prenom" style=" color: #23A6DA" />
+					</f:facet>
+
+					<h:outputText value="#{personnel.prenom}" />
+				</p:column>
+
+
+				<p:column sortBy="#{personnel.departement}"
+					filterBy="#{personnel.departement}">
+					<f:facet name="header">
+						<h:outputText value="Departement" style=" color: #23A6DA" />
+					</f:facet>
+					<h:outputText value="#{personnel.departement}" />
+				</p:column>
+
+
+				<p:column sortBy="#{personnel.emploi}"
+					filterBy="#{personnel.emploi}">
+					<f:facet name="header">
+						<h:outputText value="Emploi" style=" color: #23A6DA" />
+					</f:facet>
+					<h:outputText value="#{personnel.emploi}" />
+				</p:column>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog').show()"
+						icon="ui-icon-search" title="Les détails du personnel">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+				</p:column>
+
+
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog1').show()"
+						icon="ui-icon-search" title="Liste des demandes de congés">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog2').show()"
+						icon="ui-icon-search" title="Liste des evaluations ">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+				</p:column>
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog3').show()"
+						icon="ui-icon-search" title="Liste des demandes d'autorisation ">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+
+				</p:column>
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog4').show()"
+						icon="ui-icon-search" title="Liste des emplois précédents ">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+
+
+				</p:column>
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog5').show()"
+						icon="ui-icon-search" title="Liste des diplomes ">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+
+
+				</p:column>
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton oncomplete="PF('persoDialog6').show()"
+						icon="ui-icon-search" title="Liste des formations ">
+						<f:setPropertyActionListener value="#{perso}"
+							target="#{personnelBean.personnelSelected}" />
+					</p:commandButton>
+
+
+				</p:column>
+
+
+				<f:facet name="footer">
+				
+                En total on a #{personnelBean.personnels.size()} personnels
+              </f:facet>
+
+
+			</p:dataTable>
+
+
+			<p:dialog header="Personnel Info" widgetVar="persoDialog"
+				modal="true" showEffect="explode" hideEffect="bounce"
+				resizable="false">
+
+				<p:scrollPanel id="display" style="text-align:center;">
+
+					<h:panelGrid columns="2" cellpadding="10">
+						<h:outputLabel title="Nom" value="Nom" style="color: #32789D;" />
+
+						<h:outputText value="#{personnelBean.personnelSelected.nom}" />
+						<h:outputLabel value="Prenom" style="color: #32789D;" />
+
+						<h:outputText value="#{personnelBean.personnelSelected.prenom}" />
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" cellpadding="10">
+
+						<h:panelGrid columns="2" cellpadding="10">
+
+
+							<h:outputLabel value="Coordonnées"
+								style="color: #23A6DA;font-size:20px" />
+
+							<h:outputLabel value="Position"
+								style="color: #23A6DA;font-size:20px;" />
+							<h:panelGrid columns="2" cellpadding="10">
+								<h:outputLabel value="tél pro" style="color: #32789D;" />
+
+								<h:outputText value="#{personnelBean.personnelSelected.tél_pro}" />
+								<h:outputLabel value="Email pro" style="color: #32789D;" />
+								<h:outputText
+									value="#{personnelBean.personnelSelected.email_pro}" />
+								<h:outputText
+									value="#{personnelBean.personnelSelected.email_pro}">
+
+								</h:outputText>
+							</h:panelGrid>
+							<h:panelGrid columns="2" cellpadding="10">
+
+								<h:outputLabel value="departement" style="color: #32789D;" />
+								<h:outputText
+									value="#{personnelBean.personnelSelected.departement}" />
+								<h:outputLabel value="emploi" style="color: #32789D;" />
+								<h:outputText value="#{personnelBean.personnelSelected.emploi}" />
+
+								<h:outputLabel value="Fax" style="color: #32789D;" />
+								<h:outputText value="#{personnelBean.personnelSelected.fax}" />
+
+							</h:panelGrid>
+						</h:panelGrid>
+
+						<h:outputText value=""
+							style=" color: #F0AF18;font-size:12pt;text-align: center;" />
+
+						<h:panelGrid columns="2" cellpadding="10">
+
+
+							<h:outputLabel value="Citoyenneté et autres infos"
+								style="color: #23A6DA;font-size:20px;" />
+
+
+							<h:outputLabel value="Coordonnées"
+								style="color: #23A6DA;font-size:20px;" />
+
+
+							<h:panelGrid columns="2" cellpadding="10">
+
+
+								<h:outputLabel value="Nationnalité" style="color: #32789D;" />
+
+
+
+
+								<h:outputText
+									value="#{personnelBean.personnelSelected.nationnalité}" />
+
+
+								<h:outputLabel value="Cin" style="color: #32789D;" />
+
+
+								<h:outputText value="#{personnelBean.personnelSelected.cin}" />
+
+
+
+								<h:outputLabel value="numero de compte bancaire"
+									style="color: #32789D;" />
+
+								<h:outputText
+									value="#{personnelBean.personnelSelected.num_compte_bancaire}" />
+
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" cellpadding="10">
+								<h:outputLabel value="Rue" style="color: #32789D;" />
+								<h:outputText value="#{personnelBean.personnel.rue}"
+									required="true" />
+
+
+								<h:outputLabel value="Ville" style="color: #32789D;" />
+
+
+								<h:outputText value="#{personnelBean.personnelSelected.ville}" />
+
+
+							</h:panelGrid>
+							<h:outputLabel value="Statut"
+								style="color: #23A6DA;font-size:20px" />
+							<h:outputLabel value="Naissance"
+								style="color: #23A6DA;font-size:20px;" />
+							<h:panelGrid columns="2" cellpadding="10">
+								<h:outputLabel value="Sexe" style="color: #32789D;" />
+
+
+
+								<h:outputText value="#{personnelBean.personnelSelected.sexe}" />
+
+
+								<h:outputLabel value="Etat civil" style="color: #32789D;" />
+
+
+								<h:outputText
+									value="#{personnelBean.personnelSelected.etat_civil}" />
+
+
+								<h:outputLabel value="nbr des enfants" style="color: #32789D;" />
+
+
+								<h:outputText
+									value="#{personnelBean.personnelSelected.nbr_enfant}" />
+
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" cellpadding="10" style="margin-top:30px">
+								<h:outputLabel value="date de naissance "
+									style="color: #32789D;" />
+
+								<h:outputText value="#{personnelBean.personnel.date_naissance}">
+									<f:convertDateTime pattern="MM/dd/yyyy" />
+								</h:outputText>
+
+								<h:outputLabel value="Ville de naissance "
+									style="color: #32789D;" />
+								<h:outputText value="#{personnelBean.personnel.ville_naissance}"
+									required="true" />
+							</h:panelGrid>
+						</h:panelGrid>
+
+					</h:panelGrid>
+
+
+				</p:scrollPanel>
+			</p:dialog>
+
+
+			<p:dialog header="liste des demandes de congé "
+				widgetVar="persoDialog1" modal="true" showEffect="explode"
+				hideEffect="bounce" resizable="false">
+				<p:outputPanel id="display1" style="text-align:center;">
+
+
+
+					<p:dataTable var="conge" value="#{personnelBean.conges}" rows="5"
+						paginator="true" id="ptable1" selectionMode="single"
+						widgetVar="CongeTable"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" rowKey="#{conge.idCong}"
+						rowStyleClass="#{congBean.color(conge.etat)}">
+
+
+						<f:facet name="header">
+							<h:outputText value="Liste des congés "
+								style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+								<h:outputText value="Search all fields:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('CongeTable').filter()" style="width:150px"
+									placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column headerText="ID" filterBy="#{conge.idCong}"
+							sortBy="#{conge.idCong}" filterMatchMode="exact"
+							footerText=" ID exacte">
+                    <h:outputText value="#{conge.idCong}" />
+                </p:column>
+
+   <p:column headerText="Date debut" filterBy="#{conge.date_debut}"
+							sortBy="#{conge.date_debut}" filterMatchMode="exact"
+							footerText="type exacte">
+       <h:outputText value="#{conge.date_debut}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+                   
+                </p:column>
+
+   <p:column headerText="Date fin " filterBy="#{conge.date_fin}"
+							sortBy="#{conge.date_fin}" filterMatchMode="exact"
+							footerText="type exacte">
+  <h:outputText value="#{conge.date_fin}">
+
+							</h:outputText>
+   
+                </p:column>
+						<p:column headerText="Jour restant  "
+							filterBy="#{conge.personnel.nbr_jour_restant}"
+							sortBy="#{conge.personnel.nbr_jour_restant}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText
+								value="#{conge.personnel.nbr_jour_restant}" />
+                </p:column>
+
+
+
+						<p:column headerText="jour   "
+							filterBy="#{conge.personnel.nbr_jour}"
+							sortBy="#{conge.personnel.nbr_jour}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{conge.personnel.nbr_jour}" />
+                </p:column>
+						<p:column headerText="Etat " filterBy="#{conge.etat}"
+							sortBy="#{conge.etat}" filterMatchMode="exact"
+							footerText="type exacte">                 
+ <f:facet name="filter">
+								<p:selectOneMenu onchange="PF('CongeTable').filter()">
+									<f:selectItem itemLabel="Select One" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="en cours" itemValue="en cours" />
+									<f:selectItem itemLabel="validée" itemValue="validée" />
+									<f:selectItem itemLabel="annulée" itemValue="annulée" />
+								</p:selectOneMenu>
+							</f:facet>
+ <h:outputText value="#{conge.etat}" />
+ </p:column>
+						<p:column headerText="nombre de jour de congé "
+							filterBy="#{conge.nbr_jour_conge}"
+							sortBy="#{conge.nbr_jour_conge}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{conge.nbr_jour_conge}" />
+                </p:column>
+
+						<f:facet name="footer">
+        En total on a #{personnelBean.conges.size()}  demandes de  congé   
+          
+          </f:facet>
+					</p:dataTable>
+				</p:outputPanel>
+			</p:dialog>
+
+
+
+
+			<p:dialog header="liste des evaluations " widgetVar="persoDialog2"
+				modal="true" showEffect="explode" hideEffect="bounce"
+				resizable="false">
+				<p:outputPanel id="display2" style="text-align:center;">
+
+
+					<p:dataTable var="eval" value="#{personnelBean.evales}" rows="5"
+						paginator="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" id="ptable2" selectionMode="single"
+						widgetVar="evalTable2" rowKey="#{eval.ideval}">
+
+
+						<f:facet name="header">
+							<h:outputText value="Liste des evaluations"
+								style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+								<h:outputText value="Search all fields:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('evalTable2').filter()" style="width:150px"
+									placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column id="typecongeId" headerText="ID" filterBy="#{eval.ideval}"
+							sortBy="#{eval.ideval}" filterMatchMode="exact"
+							footerText=" ID exacte">
+                    <h:outputText value="#{eval.ideval}" />
+                </p:column>
+             
+
+                <p:column headerText="Note" id="typecongedes"
+							filterBy="#{eval.note}" sortBy="#{eval.note}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{eval.note}" />
+                </p:column>
+
+                <p:column headerText="Date" filterBy="#{eval.date}"
+							sortBy="#{eval.date}" filterMatchMode="exact"
+							footerText="type exacte">
+           <h:outputText value="#{eval.date}">
+
+							</h:outputText>
+                </p:column>
+
+                <p:column headerText="Commentaire"
+							filterBy="#{eval.commentaire}" sortBy="#{eval.commentaire}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{eval.commentaire}" />
+                </p:column>
+ <p:column headerText="Competence" filterBy="#{eval.comp.libelle}"
+							sortBy="#{eval.comp.libelle}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{eval.comp.libelle}" />
+                </p:column>
+
+
+        
+
+
+					<f:facet name="footer">
+				
+                En total on a #{personnelBean.evales.size()} evaluations 
+                
+              </f:facet>
+
+
+					</p:dataTable>
+
+
+				</p:outputPanel>
+			</p:dialog>
+			<p:dialog header="liste des demandes  d'autorisation"
+				widgetVar="persoDialog3" modal="true" showEffect="explode"
+				hideEffect="bounce" resizable="false">
+				<p:outputPanel id="display3" style="text-align:center;">
+					<p:dataTable var="dem" value="#{personnelBean.demandes}" rows="5"
+						paginator="true" id="ptable3" selectionMode="single"
+						widgetVar="demTable"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" rowKey="#{dem.iddem}"
+						rowStyleClass="#{demandesortieBean.color(dem.etat)}">
+
+
+
+						<f:facet name="header">
+							<h:outputText value="Liste des demandes de sortie"
+								style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+								<h:outputText value="Search all fields:" />
+								<p:inputText id="globalFilter" onkeyup="PF('demTable').filter()"
+									style="width:150px" placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+						<p:column headerText="ID" filterBy="#{dem.iddem}"
+							sortBy="#{dem.iddem}" filterMatchMode="exact"
+							footerText=" ID exacte">
+							<h:outputText value="#{dem.iddem}" />
+ </p:column>
+ <p:column headerText="Date " filterBy="#{dem.d1}" sortBy="#{dem.d1}"
+							filterMatchMode="exact" footerText="type exacte">
+							<h:outputText value="#{dem.d1}">
+							</h:outputText>
+						</p:column>
+ <p:column headerText="Heure debut" filterBy="#{dem.heure_debut}"
+							sortBy="#{dem.heure_debut}" filterMatchMode="exact"
+							footerText="type exacte">
+							<h:outputText value="#{dem.heure_debut}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Heure fin " filterBy="#{dem.heure_fin}"
+							sortBy="#{dem.heure_fin}" filterMatchMode="exact"
+							footerText="type exacte">
+							<h:outputText value="#{dem.heure_fin}">
+							</h:outputText>
+						</p:column>
+
+  <p:column headerText="Etat " filterBy="#{dem.etat}"
+							sortBy="#{dem.etat}" filterMatchMode="exact"
+							footerText="type exacte">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('demTable').filter()">
+									<f:selectItem itemLabel="Select One" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="en cours" itemValue="en cours" />
+									<f:selectItem itemLabel="validée" itemValue="validée" />
+									<f:selectItem itemLabel="annulée" itemValue="annulée" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText value="#{dem.etat}" />
+						</p:column>
+
+						<f:facet name="footer">
+				
+                En total on a #{personnelBean.demandes.size()} demandes 
+                
+              </f:facet>
+					</p:dataTable>
+
+
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog header="liste des emplois précédents"
+				widgetVar="persoDialog4" modal="true" showEffect="explode"
+				hideEffect="bounce" resizable="false">
+				<p:outputPanel id="display4" style="text-align:center;">
+					<p:dataTable var="emploiprec" value="#{personnelBean.emploipreces}"
+						rows="5" paginator="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" id="ptable4" selectionMode="single"
+						widgetVar="emploiprecTable4" rowKey="#{emploiprec.idemploi}">
+
+
+						<f:facet name="header">
+							<h:outputText value="Liste des emplois précédents"
+								style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+								<h:outputText value="Search all fields:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('emploiprecTable4').filter()" style="width:150px"
+									placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column headerText="ID" filterBy="#{emploiprec.idemploi}"
+							sortBy="#{emploiprec.idemploi}" filterMatchMode="exact"
+							footerText=" ID exacte">
+                    <h:outputText value="#{emploiprec.idemploi}" />
+                </p:column>
+
+                <p:column headerText="Entreprise"
+							filterBy="#{emploiprec.entreprise}"
+							sortBy="#{emploiprec.entreprise}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{emploiprec.entreprise}" />
+                </p:column>
+
+
+                <p:column headerText="Poste"
+							filterBy="#{emploiprec.poste}" sortBy="#{emploiprec.poste}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.poste}" />
+                </p:column>
+
+                <p:column headerText="Contrat"
+							filterBy="#{emploiprec.contrat}" sortBy="#{emploiprec.contrat}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.contrat}" />
+                </p:column>
+
+    <p:column headerText="Description"
+							filterBy="#{emploiprec.description}"
+							sortBy="#{emploiprec.description}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{emploiprec.description}" />
+                </p:column>
+
+        
+  <p:column headerText="Date Debut" filterBy="#{emploiprec.date_deb}"
+							sortBy="#{emploiprec.date_deb}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{emploiprec.date_deb}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+                </p:column>
+
+
+
+  <p:column headerText="Date Fin" filterBy="#{emploiprec.date_ffin}"
+							sortBy="#{emploiprec.date_ffin}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{emploiprec.date_ffin}">
+								<f:convertDateTime pattern="MM/dd/yyyy" />
+							</h:outputText>
+                </p:column>
+
+						<f:facet name="footer">
+				
+                En total on a #{personnelBean.emploipreces.size()} emplois precedents 
+              </f:facet>
+
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog header="liste des diplômes " widgetVar="persoDialog5"
+				modal="true" showEffect="explode" hideEffect="bounce"
+				resizable="false">
+				<p:outputPanel id="display5" style="text-align:center;">
+
+					<p:dataTable var="dip" value="#{personnelBean.diplomes}" rows="5"
+						paginator="true"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" id="ptable10" selectionMode="single"
+						widgetVar="dipTable5" rowKey="#{dip.iddiplome}">
+
+						<f:facet name="header">
+							<h:outputText value="Liste des diplomes  "
+								style=" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+								<h:outputText value="Search all fields:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('dipTable5').filter()" style="width:150px"
+									placeholder="Enter keyword" />
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column headerText="ID" filterBy="#{dip.iddiplome}"
+							sortBy="#{dip.iddiplome}" filterMatchMode="exact"
+							footerText=" ID exacte">
+                    <h:outputText value="#{dip.iddiplome}" />
+                </p:column>
+      
+                <p:column headerText="Année" filterBy="#{dip.annee}"
+							sortBy="#{dip.annee}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{dip.annee}" />
+                </p:column>
+
+
+                <p:column headerText="Denomination"
+							filterBy="#{dip.denomination}" sortBy="#{dip.denomination}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.denomination}" />
+                </p:column>
+
+                <p:column headerText="Etablissement"
+							filterBy="#{dip.etablissement}" sortBy="#{dip.etablissement}"
+							filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.etablissement}" />
+                </p:column>
+
+    <p:column headerText="Niveau" filterBy="#{dip.niveau}"
+							sortBy="#{dip.niveau}" filterMatchMode="exact"
+							footerText="type exacte">
+                    <h:outputText value="#{dip.niveau}" />
+                </p:column>
+        
+					<f:facet name="footer">
+				
+                En total on a #{personnelBean.diplomes.size()} diplomes 
+              </f:facet>
+
+					</p:dataTable>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog header="liste des formations " widgetVar="persoDialog6"
+				modal="true" showEffect="explode" hideEffect="bounce"
+				resizable="false">
+				<p:outputPanel id="display6" style="text-align:center;">
+
+
+				</p:outputPanel>
+			</p:dialog>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

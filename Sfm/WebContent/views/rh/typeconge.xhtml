@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form1">
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+		<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+
+			<p:fieldset legend="Nouvel type de congé" icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+			
+
+				<p:panel>
+				<h:panelGrid columns="2" cellspacing="5">
+                        <h:outputLabel  value="Type de congé: " />
+                        <p:inputText value="#{typecongeBean.typeconge.type}"/>
+                        
+                    <h:outputLabel  value="description: " />
+                    <p:inputText value="#{typecongeBean.typeconge.description}"/>
+                      <h:outputLabel  value="Coleur: " />
+                    
+                     <p:colorPicker value="#{typecongeBean.typeconge.color}"/>  
+                     
+              
+                    </h:panelGrid>
+				</p:panel>
+
+				<p:commandButton value="save" icon="ui-icon-check"
+					action="#{typecongeBean.createtypeconge()}" update=":form1 :form2" style="color: #23A6DA;"  />
+				<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{typecongeBean.updatetypeconge()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{typecongeBean.deletetypeconge()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+			</p:fieldset>
+			<p:spacer style="margin-bottom:3%;" />
+			<p:dataTable var="typeconge"
+				value="#{typecongeBean.typeconges}"  rows="5" paginator="true"
+				id="ptable" selectionMode="single"
+				 widgetVar="TypecongeTable"
+				  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				selection="#{typecongeBean.typecongeSelected}"
+				rowKey="#{typeconge.idtypeconge}">
+				<p:ajax event="rowSelect"
+					listener="#{typecongeBean.onRowSelect(rowSelect)}"
+					update=":form1" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des types congé"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('TypecongeTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column id="typecongeId" headerText="ID" filterBy="#{typeconge.idtypeconge}" sortBy="#{typeconge.idtypeconge}" filterMatchMode="exact" footerText=" ID exacte">
+                    <h:outputText value="#{typeconge.idtypeconge}" />
+                </p:column>
+                <p:column headerText="Type" id="typecongetype" filterBy="#{typeconge.type}"  sortBy="#{typeconge.type}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{typeconge.type}" />
+                </p:column>
+
+
+
+                <p:column headerText="Description" id="typecongedes" filterBy="#{typeconge.description}"  sortBy="#{typeconge.description}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{typeconge.description}" />
+                </p:column>
+
+
+
+    <p:column headerText="Coleur" id="typecoes" filterBy="#{typeconge.color}"  sortBy="#{typeconge.color}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{typeconge.color}"   style="background-color: \##{typeconge.color} "/>
+                </p:column>
+
+
+        
+					<f:facet name="footer">
+				
+				
+                En total on a #{typecongeBean.typeconges.size()} types de congé  
+              </f:facet>
+
+			</p:dataTable>
+			
+			</h:form>
+			<h:form id="form2"   >
+			
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+		<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+			
+			<p:fieldset legend="Nouvelle demande de congé " icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500">
+
+		
+
+				<p:panel         >
+				
+			<br></br>
+					<div align="center">
+					
+				 <p:clock pattern="HH:mm:ss dd.MM.yyyy"  />
+			
+				
+				</div>
+				<br></br>
+				
+		 <h:panelGrid columns="2" cellpadding="10"> 
+     
+   
+        
+                    
+             <h:outputLabel  value="Personnel" />
+                    
+                 
+            <p:selectOneMenu id="per" value="#{congBean.cong.personnel}" converter="#{personnelConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{personnelBean.personnels}" var="p" itemLabel="#{p.nom} #{p.prenom}" itemValue="#{p}" /> 
+</p:selectOneMenu> 
+                  
+                  
+           
+                    <h:outputLabel  value="Date début" />
+                 
+                                     <p:calendar showOn="button" 
+							value="#{congBean.cong.date_debut}" effect="drop"  />
+					
+         
+                    <h:outputLabel  value="Date Fin" />
+                           <p:calendar showOn="button" 
+							value="#{congBean.cong.date_fin}" effect="drop"  />
+						
+                               
+                    <h:outputLabel  value="tél durant le congé" />
+                 
+                   
+                     <p:inputMask id="phone" value="#{congBean.cong.tel_durant_conge}"  required="true" mask="(+999) 99-999-999"/>
+       
+       
+                    <h:outputLabel  value="adresse durant le congé" />
+                 
+                    <p:inputText    value="#{congBean.cong.adresse_durant_conge}" required="true"/>
+              
+
+                      <h:outputLabel  value="type de congé" />
+                            
+ 
+
+    <p:selectOneMenu id="typs" value="#{congBean.cong.typeconge}" widgetVar="typee"  converter="#{typecongeConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{typecongeBean.typeconges}" var="t" itemLabel="#{t.type}" itemValue="#{t}" /> 
+</p:selectOneMenu> 
+        
+   
+      <h:outputLabel  value="" />
+   
+ <p:commandButton value="Créer" onclick= "PF('eventDialog').show();" type="button"/>
+
+
+                      <h:outputLabel  value="desciption" />
+                 
+                   <p:inputTextarea rows="10"   value="#{congBean.cong.description}" cols="60"  />
+                   
+                    <h:outputLabel  value="etat"  />
+                 
+                  
+              <p:selectOneMenu value="#{congBean.cong.etat}" >  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="en cours" itemValue="en cours" />  
+            <f:selectItem itemLabel="validée" itemValue="validée" />  
+            <f:selectItem itemLabel="annulée" itemValue="annulée" /> 
+             
+        </p:selectOneMenu> 
+      </h:panelGrid>
+              	
+				</p:panel>
+							
+							
+	<p:commandButton value="save" icon="ui-icon-check"  actionListener="#{congBean.createcong()}"   update=":form2:"  style="color: #23A6DA;"  />
+			
+			
+		
+<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					actionListener="#{congBean.updatecong()}" update=":form2:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					actionListener="#{congBean.deletecong()}" update=":form2:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+			</p:fieldset>
+	
+		<p:spacer style="margin-bottom:3%;" />
+
+			<p:dataTable var="conge"
+				value="#{congBean.congs}" rows="5" paginator="true"
+				id="ptable" selectionMode="single"
+				 widgetVar="CongeTable"
+				selection="#{congBean.congSelected}"
+				  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				rowKey="#{conge.idCong}"   rowStyleClass="#{congBean.color(conge.etat)}" >
+				
+				
+				<p:ajax event="rowSelect"
+					listener="#{congBean.onRowSelect(rowSelect)}"
+					update=":form2" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des congé"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('CongeTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+<p:column  headerText="ID" filterBy="#{conge.idCong}" sortBy="#{conge.idCong}" filterMatchMode="exact" footerText=" ID exacte">
+<h:outputText value="#{conge.idCong}" />
+ </p:column>
+                <p:column headerText="Nom"  filterBy="#{conge.personnel.nom}" sortBy="#{conge.personnel.nom}" filterMatchMode="exact" footerText="type exacte">
+         <h:outputText value="#{conge.personnel.nom}" />
+                </p:column>
+ <p:column headerText="Prenom"  filterBy="#{conge.personnel.prenom}" sortBy="#{conge.personnel.prenom}" filterMatchMode="exact" footerText="type exacte">
+ <h:outputText value="#{conge.personnel.prenom}" />
+ </p:column>
+ <p:column headerText="Fonction"  filterBy="#{conge.personnel.emploi}" sortBy="#{conge.personnel.emploi}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{conge.personnel.emploi}" />
+ </p:column>
+ <p:column headerText="Date debut"  filterBy="#{conge.date_debut}" sortBy="#{conge.date_debut}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{conge.date_debut}" >
+</h:outputText>      
+</p:column>
+<p:column headerText="Date fin "  filterBy="#{conge.date_fin}" sortBy="#{conge.date_fin}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{conge.date_fin}" >
+</h:outputText>
+ </p:column>
+<p:column headerText="Jour restant  "  filterBy="#{conge.personnel.nbr_jour_restant}" sortBy="#{conge.personnel.nbr_jour_restant}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{conge.personnel.nbr_jour_restant}" />
+</p:column>
+  <p:column headerText="Etat "  filterBy="#{conge.etat}" sortBy="#{conge.etat}" filterMatchMode="exact" footerText="type exacte">
+ <f:facet name="filter">
+ <p:selectOneMenu onchange="PF('CongeTable').filter()" >
+ <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+<f:selectItem itemLabel="en cours" itemValue="en cours" />  
+ <f:selectItem itemLabel="validée" itemValue="validée" />  
+  <f:selectItem itemLabel="annulée" itemValue="annulée" /> 
+</p:selectOneMenu>
+</f:facet>
+ <h:outputText value="#{conge.etat}" />
+</p:column>   
+   <p:column headerText="nombre de jour de congé " filterBy="#{conge.nbr_jour_conge}" sortBy="#{conge.nbr_jour_conge}" filterMatchMode="exact" footerText="type exacte">
+                       
+                     <h:outputText value="#{conge.nbr_jour_conge}" />
+                </p:column>
+    <p:column style="width:32px;text-align: center">
+             <p:commandButton  oncomplete="PF('congDialog').show()" icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{cong}" target="#{congBean.congSelected}" />
+            </p:commandButton>
+        </p:column>
+   
+            <p:row>  
+                <p:column  headerText="#{congBean.totalvalidé()}  demandes validées" />  
+           
+            </p:row>  
+            <p:row>  
+                <p:column colspan="9" headerText="#{congBean.totalencours()}  demandes en cours " />  
+        
+            </p:row>  
+      
+  
+            <p:row>  
+                <p:column colspan="9" headerText="#{congBean.totalannulé()}  demandes annulée" />  
+        
+            </p:row>  
+  
+            <p:row>  
+                <p:column rowspan="9"  headerText="En total on a #{congBean.congs.size()}  demandes de  congé " />  
+
+            </p:row>  
+
+     
+
+			</p:dataTable>
+
+	
+	<p:dialog  header="Les détails de la demande " widgetVar="congDialog" modal="true"  showEffect="explode" hideEffect="bounce" resizable="false">
+        <p:outputPanel id="display" style="text-align:center; background-color:##{congBean.congSelected.typeconge.color}">
+
+            <h:panelGrid  columns="2"  cellpadding="10" >
+             <h:outputLabel  title="Personnel" value="Nom" style="color: #32789D;" />
+              
+                    <h:outputText value="#{congBean.congSelected.personnel.nom} #{congBean.congSelected.personnel.prenom}" />
+                    
+                    <h:outputLabel   value="Date début " style="color: #32789D;"/>
+       
+                  <h:outputText value="#{congBean.congSelected.date_debut}"/> 
+                  
+                
+                
+                    <h:outputLabel   value="Date fin " style="color: #32789D;"/>
+       
+                  <h:outputText value="#{congBean.congSelected.date_fin}" />
+                  
+                  
+                  
+                  
+                    <h:outputLabel   value="numéro de tel durant le congé  " style="color: #32789D;"/>
+       
+                  <h:outputText value="#{congBean.congSelected.tel_durant_conge}" />
+                  
+               <h:outputLabel   value="adresse durant le congé  " style="color: #32789D;"/>
+       
+                  <h:outputText value="#{congBean.congSelected.adresse_durant_conge}" />
+                  
+                  
+                     <h:outputLabel   value="Type de congé " style="color: #32789D;"/>
+       
+                  <h:outputText value="#{congBean.congSelected.typeconge.type}"/>
+         <h:outputLabel   value="Etat " style="color: #32789D;"/>
+       
+                  <h:outputText value="#{congBean.congSelected.etat}" />
+                  
+            </h:panelGrid>
+                  
+        </p:outputPanel>
+    </p:dialog>       
+     
+	
+	
+
+		</h:form>
+		
+			   <p:dialog widgetVar="eventDialog" modal="true" header="Créer un nouveau type de congé" width="530"  showEffect="explode" hideEffect="bounce">
+
+            <h:form>
+
+                   <p:panel header="ajout  d'un type de congé " style ="color:#23A6DA;" id="b">
+	
+				
+
+         <div align="center">
+
+                 	<h:panelGrid columns="2" cellspacing="5">
+                        <h:outputLabel  value="Type de congé: " />
+                        <p:inputText value="#{typecongeBean.typeconge.type}"/>
+                          <h:outputLabel  value="description: " />
+                    <p:inputText value="#{typecongeBean.typeconge.description}"/>
+                          
+                      
+                    </h:panelGrid>
+                   
+              
+
+                 
+
+                    <p:separator />
+        
+
+                  
+                    <p:commandButton value="enregistrer"  action="#{typecongeBean.createtypeconge()}"  update=":form1: :form2:typs" oncomplete="PF('eventDialog').hide(); "   style="color: #23A6DA;"  />
+                    <p:commandButton value="annuler" onclick="PF('eventDialog').hide();" type="Reset"   style="color: #23A6DA;"/>
+
+ </div>
+	
+</p:panel>
+
+</h:form>
+
+   </p:dialog>
+		
+			
+</ui:define>
+</ui:composition>

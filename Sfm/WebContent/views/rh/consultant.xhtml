@@ -1,0 +1,453 @@
+ <!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		    
+<h:form id="form1">
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+		<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+
+			<p:fieldset legend="Nouveau consultant " icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500">
+
+				<p:ajax event="toggle" listener="#{consultantBean.handleToggle()}" />
+
+				<p:panel>
+
+
+
+
+            
+                <h:panelGrid columns="2" cellpadding="10">  
+        
+                    
+                    <h:outputLabel for="nom" title="Nom" value="Nom:" style="color: #32789D;" />
+                   <p:keyboard value="#{consultantBean.consultant.nom}"/> 
+                    <h:outputLabel   value="Prenom:" style="color: #32789D;"/>
+               <p:keyboard value="#{consultantBean.consultant.prenom}"/> 
+
+        </h:panelGrid>
+       
+         <p:tabView style="color:#F0AF18;">  
+        <p:tab title="l'information  du publique">
+     
+        
+          
+          
+         <p:panelGrid id="i1"    >
+  <p:row>
+    <p:column>
+                     <h:outputLabel  value="Coordonnées" style="color: #23A6DA;font-size:20px"/>
+                        <h:panelGrid columns="2" cellpadding="10">  
+         
+                    <h:outputLabel  value="tel pro" style="color: #32789D;"/>
+                 
+      <p:inputMask id="phone" value="#{consultantBean.consultant.tel_pro}"   required="true" mask="(+999) 99-999-999"/>
+                    
+   <h:outputLabel  value="Email" style="color: #32789D;"/>
+     <p:inputText value="#{consultantBean.consultant.email_pro}"  id="email"     type="email" required="true">  
+	
+
+
+<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+	</p:inputText>
+       <h:message for="email" style="color:red" />
+       <h:outputLabel value=" " />
+	                           
+                    <h:outputLabel  value="Fax" style="color: #32789D;"/>
+       
+                  
+                        <p:inputMask  value="#{consultantBean.consultant.fax}"   required="true" mask="(+999) 99-999-999"/>
+                        
+
+         
+            </h:panelGrid>
+
+    
+         
+         </p:column>
+    <p:column>                         
+                         
+                 
+      <h:outputLabel value="Position" style="color: #23A6DA;font-size:20px;"/>
+
+   <h:panelGrid columns="2" cellpadding="10">  
+
+ 
+                    <h:outputLabel  value="emploi" style="color: #32789D;" />
+                    <p:inputText value="#{consultantBean.consultant.emploi}" />
+ 
+
+          
+            </h:panelGrid>
+         
+                 
+         
+         </p:column>
+   
+  </p:row>
+  <p:row>
+  
+    <p:column colspan="2" >
+
+          <h:outputLabel  value="Autres informations " style="color: #23A6DA;font-size:20px"/>
+         <h:panelGrid columns="2" cellpadding="10">  
+        <p:inputTextarea rows="10" cols="50"   value="#{consultantBean.consultant.autres_info}"  id="keyword" />  
+             <p:watermark for="keyword" value="saisir d'autres informations " />
+        </h:panelGrid>
+         
+            </p:column>
+   
+  </p:row>
+</p:panelGrid>            
+        </p:tab>  
+     
+        <p:tab title="Renseignements consultants">
+
+     
+        <p:panelGrid id="idPanelAddUsers"    >
+  <p:row>
+    <p:column>
+   <h:outputLabel  value="Citoyenneté et autres infos" style="color: #23A6DA;font-size:20px;"/>                
+   <h:panelGrid columns="2" cellpadding="10">
+                         
+                        
+                    <h:outputLabel  value="nationnalite" style="color: #32789D;"/>
+                 
+                    <p:inputText   value="#{consultantBean.consultant.nationnalite}"   required="true"/>
+                  <h:outputLabel  value="Cin" style="color: #32789D;"/>
+                    
+	<p:inputText id="cin" value="#{consultantBean.consultant.cin}"  required="true" requiredMessage="Please enter a  number ." > 
+		<f:convertNumber />
+
+	</p:inputText>
+ 
+	<h:message for="cin"  value ="Please enter a  number "  style="color:red" />
+	  <h:outputLabel  value=" " style="color: #32789D;"/>
+                    
+                    <h:outputLabel  value="numero de compte bancaire" style="color: #32789D;"/>
+          <p:keyboard value="#{consultantBean.consultant.num_compte_bancaire}" style ="margin-left:3px;" showMode="button"  keypadOnly="true"/>  
+                     </h:panelGrid>
+    
+         
+         </p:column>
+    <p:column>                         
+                         
+                 
+         <h:outputLabel  value="Coordonnées" style="color: #23A6DA;font-size:20px;"/>
+         
+                       <h:panelGrid columns="2" cellpadding="10">   
+                    <h:outputLabel  value="Rue" style="color: #32789D;"/>
+                     <p:inputText value="#{consultantBean.consultant.rue}"   required="true"/>
+                    <h:outputLabel  value="Ville" style="color: #32789D;"/>
+                     <p:inputText value="#{consultantBean.consultant.ville}"   required="true"/>
+                        
+                         </h:panelGrid>
+                    
+         
+         </p:column>
+   
+  </p:row>
+  <p:row>
+    <p:column >
+       <h:outputLabel  value="Statut" style="color: #23A6DA;font-size:20px"/>
+       <h:panelGrid columns="2" cellpadding="10">
+               <h:outputLabel  value="Sexe" style="color: #32789D;"/>     
+             <p:selectOneMenu value="#{consultantBean.consultant.sexe}">  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="Femme" itemValue="Femme" />  
+            <f:selectItem itemLabel="Homme" itemValue="Homme" />  
+        </p:selectOneMenu>  
+          <h:outputLabel  value="Etat civil" style="color: #32789D;" />
+           <p:selectOneMenu value="#{consultantBean.consultant.etat_civil}">
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="Célibataire" itemValue="Célibataire" />  
+            <f:selectItem itemLabel="Marié(e)" itemValue="Marié(e)" />  
+            <f:selectItem itemLabel="veuf" itemValue="veuf" /> 
+            <f:selectItem itemLabel="Divorcé(e)" itemValue="Divorcé(e)" /> 
+             
+        </p:selectOneMenu>
+                    <h:outputLabel  value="nbr des enfants" style="color: #32789D;"/>
+                    <p:keyboard value="#{consultantBean.consultant.nbr_enfant}"  style ="margin-left:5px;" 
+                    showMode="button"  keypadOnly="true"/>  
+                       </h:panelGrid>
+         
+            </p:column>
+    <p:column>
+    
+      <h:outputLabel value="Naissance" style="color: #23A6DA;font-size:20px;"/> 
+          <h:panelGrid columns="2" cellpadding="10" style="margin-top:30px">
+                        
+               <h:outputLabel  value="Date de naissance " style="color: #32789D;"/>
+              
+                    <p:calendar showOn="button" pattern="yyyy-mm-dd"
+							value="#{consultantBean.consultant.date_naissance}" effect="drop"  />
+                        <h:outputLabel  value="Ville de naissance " style="color: #32789D;"/>
+                        <p:inputText  value="#{consultantBean.consultant.ville_naissance}" required="true"/>
+                      
+        </h:panelGrid>
+            
+    </p:column>
+  </p:row>
+</p:panelGrid>
+
+        </p:tab>  
+               
+  
+   
+   
+    </p:tabView>  
+
+ </p:panel>
+
+                      <p:commandButton value="save" icon="ui-icon-check"
+					action="#{consultantBean.createcons()}" update=":form1:" style="color: #23A6DA;"  />
+				<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{consultantBean.updatecons()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{consultantBean.deletecons()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+			</p:fieldset>
+			<p:spacer style="margin-bottom:3%;" />
+			
+			<p:dataTable var="consultant"
+				value="#{consultantBean.consultants}" rows="5" paginator="true"
+				id="ptable" selectionMode="single"
+				 widgetVar="consultantTable"
+				paginatorTemplate="{CurrentPageReport}   {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+				selection="#{consultantBean.consultantSelected}"
+				rowKey="#{consultant.idconsultant}">
+				<p:ajax event="rowSelect"
+					listener="#{consultantBean.onRowSelect(rowSelect)}"
+					update=":form1"   style="margin-left:20px;margin-right:20px;"/>
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des consultants"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('consultantTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+				<p:column  sortBy="#{consultant.idconsultant}" filterBy="#{consultant.idconsultant}">
+					       <f:facet name="header" >  
+            <h:outputText value="id" style =" color: #23A6DA" />  
+        </f:facet> 
+					<h:outputText value="#{consultant.idconsultant}"  />
+
+				</p:column>
+				<p:column 
+					sortBy="#{consultant.nom}"  filterBy="#{consultant.nom}">
+					       <f:facet name="header" >  
+            <h:outputText value="Nom" style =" color: #23A6DA" />  
+        </f:facet> 
+
+					<h:outputText value="#{consultant.nom}" />
+				</p:column>
+					<p:column 
+					sortBy="#{consultant.prenom}"  filterBy="#{consultant.prenom}">
+					       <f:facet name="header" >  
+            <h:outputText value="Prenom" style =" color: #23A6DA" />  
+        </f:facet> 
+
+					<h:outputText value="#{consultant.prenom}" />
+				</p:column>
+				
+				
+				
+				  <p:column  sortBy="#{consultant.tel_pro}" filterBy="#{consultant.tel_pro}" >  
+          <f:facet name="header" >  
+            <h:outputText value="tel professionnel" style =" color: #23A6DA" />  
+        </f:facet> 
+            <h:outputText value="#{consultant.tel_pro}" />  
+        </p:column>  
+        
+        
+        
+         <p:column   sortBy="#{consultant.email_pro}" filterBy="#{consultant.email_pro}" >  
+          <f:facet name="header" >  
+            <h:outputText value="Email  professionnel" style =" color: #23A6DA" />  
+        </f:facet> 
+            <h:outputText value="#{consultant.email_pro}" />  
+        </p:column>  
+            
+        
+        
+         <p:column sortBy="#{consultant.emploi}" filterBy="#{consultant.emploi}" >  
+          <f:facet name="header" >  
+            <h:outputText value="Emploi" style =" color: #23A6DA" />  
+        </f:facet> 
+            <h:outputText value="#{consultant.emploi}" />  
+        </p:column> 
+        
+           <p:column style="width:32px;text-align: center">
+             <p:commandButton  oncomplete="PF('persoDialog').show()" icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{perso}" target="#{consultantBean.consultantSelected}" />
+            </p:commandButton>
+        </p:column>
+		
+				<f:facet name="footer">
+				
+                En total on a #{consultantBean.consultants.size()} consultants
+              </f:facet>
+
+			</p:dataTable>
+			
+        
+     <p:dialog  header="consultant Info" widgetVar="persoDialog" modal="true"  showEffect="explode" hideEffect="bounce" resizable="false">
+        <p:outputPanel id="display" style="text-align:center;">
+
+            <h:panelGrid  columns="2"  cellpadding="10" >
+             <h:outputLabel  title="Nom" value="Nom" style="color: #32789D;" />
+              
+                    <h:outputText value="#{consultantBean.consultantSelected.nom}" />
+                    <h:outputLabel   value="Prenom" style="color: #32789D;"/>
+       
+                  <h:outputText value="#{consultantBean.consultantSelected.prenom}" />
+                  
+            </h:panelGrid>
+                  <h:panelGrid columns="2" cellpadding="10">        
+        
+        <h:panelGrid columns="2" cellpadding="10">  
+         
+                     
+                     <h:outputLabel  value="Coordonnées" style="color: #23A6DA;font-size:20px"/>
+                     
+                      <h:outputLabel value="Position" style="color: #23A6DA;font-size:20px;"/>
+                      <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputLabel  value="tel pro" style="color: #32789D;"/>
+                  
+    <h:outputText value="#{consultantBean.consultantSelected.tel_pro}"   />
+                    <h:outputLabel  value="Email pro" style="color: #32789D;" />
+    <h:outputText value="#{consultantBean.consultantSelected.email_pro}"   />
+        <h:outputLabel  value="Fax" style="color: #32789D;"/>
+   <h:outputText value="#{consultantBean.consultantSelected.fax}"   />
+                  
+             
+              
+                        
+ 
+           </h:panelGrid>
+     
+          
+                <h:panelGrid columns="2" cellpadding="10">
+                  
+               
+                                   <h:outputLabel  value="emploi" style="color: #32789D;" />
+    <h:outputText value="#{consultantBean.consultantSelected.emploi}"   />
+                                      
+ 
+       
+          </h:panelGrid>
+          </h:panelGrid>
+     
+        <h:outputText value=""  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+        
+          <h:panelGrid columns="2" cellpadding="10">  
+                        
+                   
+         <h:outputLabel  value="Citoyenneté et autres infos" style="color: #23A6DA;font-size:20px;"/>
+                        
+                         
+         <h:outputLabel  value="Coordonnées" style="color: #23A6DA;font-size:20px;"/>
+                          
+                          
+                          <h:panelGrid columns="2" cellpadding="10">
+                         
+                        
+                    <h:outputLabel  value="nationnalite" style="color: #32789D;"/>
+                 
+             
+
+
+ <h:outputText value="#{consultantBean.consultantSelected.nationnalite}"   />
+
+
+                    <h:outputLabel  value="Cin" style="color: #32789D;" />
+                 
+     
+               <h:outputText value="#{consultantBean.consultantSelected.cin}"   />
+
+ 
+            
+                    <h:outputLabel  value="numero de compte bancaire" style="color: #32789D;"/>
+
+             <h:outputText value="#{consultantBean.consultantSelected.num_compte_bancaire}"   />
+
+  
+                     </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="10">   
+                    <h:outputLabel  value="Rue" style="color: #32789D;"/>
+                     <h:outputText value="#{consultantBean.consultant.rue}"   required="true"/>
+
+
+                    <h:outputLabel  value="Ville" style="color: #32789D;"/>
+
+
+ <h:outputText value="#{consultantBean.consultantSelected.ville}"   />
+
+                      
+             </h:panelGrid>
+           <h:outputLabel  value="Statut" style="color: #23A6DA;font-size:20px"/>
+            <h:outputLabel value="Naissance" style="color: #23A6DA;font-size:20px;"/>
+                        <h:panelGrid columns="2" cellpadding="10">
+               <h:outputLabel  value="Sexe" style="color: #32789D;"/>   
+
+
+
+ <h:outputText value="#{consultantBean.consultantSelected.sexe}"   />
+  
+             
+          <h:outputLabel  value="Etat civil" style="color: #32789D;" />
+
+
+ <h:outputText value="#{consultantBean.consultantSelected.etat_civil}"   />
+
+      
+                    <h:outputLabel  value="nbr des enfants" style="color: #32789D;"/>
+                  
+
+ <h:outputText value="#{consultantBean.consultantSelected.nbr_enfant}"   />
+
+             
+                       </h:panelGrid>
+                         <h:panelGrid columns="2" cellpadding="10" style="margin-top:30px">
+                    <h:outputLabel  value="date de naissance " style="color: #32789D;"/>
+             
+               <h:outputText value="#{consultantBean.consultant.date_naissance}" >
+                  <f:convertDateTime pattern="MM/dd/yyyy" />
+                  </h:outputText>
+
+  <h:outputLabel  value="Ville de naissance " style="color: #32789D;"    />
+                        <h:outputText  value="#{consultantBean.consultant.ville_naissance}" required="true"/>
+        </h:panelGrid>
+             </h:panelGrid>
+  
+        </h:panelGrid> 
+        
+      
+        </p:outputPanel>
+    </p:dialog>       
+     
+                      
+                </h:form>
+                	</ui:define>
+</ui:composition>

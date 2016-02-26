@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion RH</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+	<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		<h:form id="form1">
+		 <p:growl id="messages" showDetail="true" />
+		 <p:spacer />
+
+			<p:fieldset legend="Nouvelle   formation" icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+				<p:ajax event="toggle" listener="#{typecongeBean.handleToggle()}" />
+		 
+				<p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="ddd">
+         <div align="center">
+         
+     <h:panelGrid columns="2" cellpadding="10">  
+            <h:outputLabel  value="Libelle " />
+             <p:inputText value="#{formationBean.frm.libelle}" />
+             
+              <h:outputLabel  value="Organisme " />
+              <p:inputText value="#{formationBean.frm.organisme}" />
+               
+
+               <h:outputLabel  value="Durée " />
+              <p:inputText  value="#{formationBean.frm.duree}"/>
+              
+              <h:outputLabel  value="Prix par personne en dinars" />
+              <p:inputText value="#{formationBean.frm.prixparpersonne}"/>
+              
+              <h:outputLabel  value="description " />
+              <p:inputText  value="#{formationBean.frm.description}" />
+         
+                </h:panelGrid>
+                    </div>
+                    
+                    
+          </p:panel>
+            <p:commandButton value="save" icon="ui-icon-check"
+					action="#{formationBean.createFormation()}" update=":form1:" style="color: #23A6DA;"  />
+
+	       <p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{formationBean.updateFormation()}" update=":form1:" style="color: #23A6DA;" />
+        	<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{formationBean.deleteFormation()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+			</p:fieldset>
+			
+			<p:spacer style="margin-bottom:3%;" />
+			<p:dataTable var="formation" value="#{formationBean.formations}" rows="5" paginator="true"
+				 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				
+				id="ptable" selectionMode="single"
+				
+				 widgetVar="formTable"
+				 
+				selection="#{formationBean.pselected}"
+				rowKey="#{formation.idformation}">
+				<p:ajax event="rowSelect"
+					listener="#{formationBean.onRowSelect(rowSelect)}"
+					update=":form1" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des formations"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('formTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                  </f:facet>
+			 <p:column id="typecongeId" headerText="ID" filterBy="#{formation.idformation}" sortBy="#{formation.idformation}" filterMatchMode="exact" footerText=" ID exacte">
+                    <h:outputText value="#{formation.idformation}" />
+                </p:column>
+<p:column headerText="Date" filterBy="#{formation.libelle}"  sortBy="#{formation.libelle}" filterMatchMode="exact" footerText="type exacte">
+           <h:outputText value="#{formation.libelle }" >
+       
+            </h:outputText>
+                </p:column>
+
+                <p:column headerText="Organisme" id="Nom" filterBy="#{formation.organisme}"  sortBy="#{formation.organisme}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{formation.organisme}" />
+                </p:column>
+
+                <p:column headerText="Duree" id="typecongedes" filterBy="#{formation.duree}"  sortBy="#{formation.duree}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{formation.duree}" />
+                </p:column>
+
+                <p:column headerText="Description" filterBy="#{formation.description}"  sortBy="#{formation.description}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{formation.description}" />
+                </p:column>
+ <p:column headerText="Prix par personne en dinars " filterBy="#{formation.prixparpersonne}" sortBy="#{formation.prixparpersonne}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{formation.prixparpersonne}" />
+                </p:column>
+					<f:facet name="footer">
+				
+                En total on a #{formationBean.formations.size()} formations
+              </f:facet>
+
+			</p:dataTable>
+              
+	</h:form>
+	</ui:define>
+</ui:composition>

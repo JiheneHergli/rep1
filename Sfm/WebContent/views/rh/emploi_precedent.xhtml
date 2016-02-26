@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion RH</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+	<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		<h:form id="form1">
+		 <p:growl id="messages" showDetail="true" />
+		 <p:spacer />
+
+
+			<p:fieldset legend="Saisie d'un emlpoi précédent " icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+				<p:ajax event="toggle" listener="#{emploiprecedentBean.handleToggle()}" />
+		 
+				<p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="ddd">
+         <div align="center">
+         
+     <h:panelGrid columns="2" cellpadding="10">  
+         
+                     
+     <h:outputLabel  value="Personnel" style="color: #23A6DA;font-size:20px"/>
+                    
+  <p:selectOneMenu id="emploiprec" value="#{emploiprecedentBean.emploiprec.personn}" converter="#{personnelConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{personnelBean.personnels}" var="p" itemLabel="#{p.nom} #{p.prenom}" itemValue="#{p}" /> 
+</p:selectOneMenu> 
+
+             <h:outputLabel  value="Entreprise" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{emploiprecedentBean.emploiprec.entreprise}"  required="true"/>
+           
+           
+            <h:outputLabel  value="Poste" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{emploiprecedentBean.emploiprec.poste}"  required="true"/>
+           
+             <h:outputLabel  value="Contrat" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{emploiprecedentBean.emploiprec.contrat}"  required="true"/>  
+           
+         <h:outputLabel  value="Date Début " style="color: #23A6DA;font-size:20px"/>
+                   <p:calendar showOn="button" pattern="yyyy-mm-dd"
+							value="#{emploiprecedentBean.emploiprec.date_deb}" effect="drop"  />
+         
+           
+        <h:outputLabel  value="Date Fin " style="color: #23A6DA;font-size:20px"/>
+ 
+                     <p:calendar showOn="button" pattern="yyyy-mm-dd"
+							value="#{emploiprecedentBean.emploiprec.date_ffin}" effect="drop" required="true"  />
+							      <h:outputLabel  value="Description" style="color: #23A6DA;font-size:20px"/>
+        
+               <p:inputTextarea rows="6" cols="80" value="#{emploiprecedentBean.emploiprec.description}"    id="keyword"/>  
+                       <p:watermark for="keyword" value="saisir un commentaire" />
+                    
+                    </h:panelGrid>
+                    </div>
+                    
+                    
+          </p:panel>
+            <p:commandButton value="save" icon="ui-icon-check"
+					action="#{emploiprecedentBean.createemploiprec()}" update=":form1:" style="color: #23A6DA;"  />
+
+	<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{emploiprecedentBean.updateemploiprec()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{emploiprecedentBean.deleteemploiprec()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+			</p:fieldset>
+			
+			<p:spacer style="margin-bottom:3%;" />
+			<p:dataTable var="emploiprec"
+				value="#{emploiprecedentBean.emploiprecs}" rows="5" paginator="true"
+				 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				
+				id="ptable" selectionMode="single"
+				
+				 widgetVar="emploiprecTable"
+				 
+				selection="#{emploiprecedentBean.emploiprecSelected}"
+				rowKey="#{emploiprec.idemploi}">
+				<p:ajax event="rowSelect"
+					listener="#{emploiprecedentBean.onRowSelect(rowSelect)}"
+					update=":form1" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des emplois précédents  de tous les personnels "  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('emploiprecTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column  headerText="ID" filterBy="#{emploiprec.idemploi}" sortBy="#{emploiprec.idemploi}" filterMatchMode="exact" footerText=" ID exacte">
+                    <h:outputText value="#{emploiprec.idemploi}" />
+                </p:column>
+
+ <p:column headerText="Personnel " id="Nom" filterBy="#{emploiprec.personn.nom} #{emploiprec.personn.prenom}" sortBy="#{emploiprec.personn.nom} #{emploiprec.personn.prenom}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{emploiprec.personn.nom} #{emploiprec.personn.prenom}" />
+ </p:column>
+
+                <p:column headerText="Entreprise" filterBy="#{emploiprec.entreprise}"  sortBy="#{emploiprec.entreprise}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.entreprise}" />
+                </p:column>
+
+
+                <p:column headerText="Poste" filterBy="#{emploiprec.poste}"  sortBy="#{emploiprec.poste}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.poste}" />
+                </p:column>
+
+                <p:column headerText="Contrat" filterBy="#{emploiprec.contrat}"  sortBy="#{emploiprec.contrat}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.contrat}"  />
+                </p:column>
+
+    <p:column headerText="Description" filterBy="#{emploiprec.description}"  sortBy="#{emploiprec.description}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.description}" />
+                </p:column>
+
+        
+  <p:column headerText="Date Debut" filterBy="#{emploiprec.date_deb}"  sortBy="#{emploiprec.date_deb}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.date_deb}"  >
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+                </p:column>
+
+
+
+  <p:column headerText="Date Fin" filterBy="#{emploiprec.date_ffin}"  sortBy="#{emploiprec.date_ffin}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{emploiprec.date_ffin}" >
+          <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+                </p:column>
+
+					<f:facet name="footer">
+				
+                En total on a #{emploiprecedentBean.emploiprecs.size()} emplois precedents 
+              </f:facet>
+
+			</p:dataTable>
+              
+	</h:form>
+		
+	</ui:define>
+</ui:composition>

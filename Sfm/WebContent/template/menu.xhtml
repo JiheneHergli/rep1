@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+
+</h:head>
+<ui:composition>
+	<h:form>
+
+		<p:accordionPanel>
+			<p:tab title="Gestion des personnels et des consultants">
+				<h:commandLink value="Personnels1" action="/views/rh/t1" />
+					<br> </br>
+					<h:commandLink value="Personnels2" action="/views/rh/t2" />
+						<br> </br>
+				<h:commandLink value="Consultants" action="/views/rh/consultant" />
+
+			</p:tab>
+			<p:tab title="gestion des congés">
+				<h:commandLink value="congé" action="/views/rh/typeconge" />
+				<br> </br>
+					<h:commandLink value="agenda" action="/views/rh/schedule" />
+				
+			</p:tab>
+			<p:tab title="Gestion des compétences">
+				<h:commandLink value="competence" action="/views/rh/competence" />
+				<br></br>
+		    <h:commandLink value="competence" action="/views/rh/comp" />
+			</p:tab>
+			<p:tab title="Gestion des evalations">
+				<h:commandLink value="evaluation" action="/views/rh/evaluation" />
+
+			</p:tab>
+			<p:tab title="Gestion des formations">
+				<h:commandLink value="formation" action="/views/rh/formation" />
+
+			</p:tab>
+			<p:tab title="Gestion des diplomes">
+				<h:commandLink value="diplome" action="/views/rh/diplome" />
+			</p:tab>
+			<p:tab title="Gestion des emplois précédents">
+				<h:commandLink value="emploi précédent" action="/views/rh/emploi_precedent" />
+
+</p:tab>
+	<p:tab title="Test Chart">
+				<h:commandLink value="Chart1" action="/views/rh/chart1" />
+				<br> </br>
+				<h:commandLink value="Chart2" action="/views/rh/bar" />
+				<br> </br>
+				<h:commandLink value="Chart3" action="/views/rh/test2" />
+
+		</p:tab>	
+
+		</p:accordionPanel>
+
+
+	</h:form>
+
+</ui:composition>
+</html>

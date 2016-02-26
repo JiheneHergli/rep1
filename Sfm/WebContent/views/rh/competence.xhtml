@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		    
+                  <h:form>
+			<p:panel header="ajout  d'une compétence" style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="b">
+				
+				<p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="ddd">
+         <div align="center">
+         <h:outputLabel  value="Libelle" style="color: #23A6DA;font-size:20px"/>
+           <p:spacer width="50" height="10" /> 
+                 
+                    <p:inputText   value="#{competenceBean.competence.libelle}" required="true"/>
+                    </div>
+                    
+                    
+          </p:panel>
+          <p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="dddd">
+       <div align="center">
+       
+                    <p:commandButton value="enregistrer"  actionListener="#{competenceBean.createcompetence()}" update="tab1"   style="color: #23A6DA;"/>
+                    <p:spacer width="50" height="10" /> 
+                    <p:button value="annuler"  type="Reset" style="color: #23A6DA;"/>
+        
+        </div>
+        
+          </p:panel>
+          </p:panel>               
+			<p:panel style =" color: #23A6DA;font-size:12pt;text-align: center;background-color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px;" id="dd">
+			<f:facet name="header"  >  
+            <h:outputText value="Liste des compétences"  style =" color: #F0AF18;font-size:12pt;text-align: center;" />  
+        </f:facet> 
+		 <p:dataTable  id="tab1" var="comp" value="#{competenceBean.competences}" style ="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px;"  >  
+        <p:column  >  
+          <f:facet name="header" >  
+            <h:outputText value="Libelle" style =" color: #23A6DA" />  
+        </f:facet> 
+            <h:outputText value="#{comp.libelle}" />  
+        </p:column>  
+  
+        
+     
+    </p:dataTable>  
+         
+    <p:panel  style =" background-color:#F0AF18; margin-left:50px;margin-right:60px;margin-top:50px;margin-bottom:50px;" >  
+       
+       <f:facet name="header"  >  
+            <h:outputText value="Exporter la liste des compétences"  style =" color: #23A6DA;font-size:12pt;text-align: center;" />  
+        </f:facet> 
+       
+        
+        <h:commandLink>  
+            <p:graphicImage value="/resources/images/document-ppt-icone-6715-48.png" />  
+            <p:dataExporter type="xls" target="tab1" fileName="competences" />  
+        </h:commandLink>  
+  
+        <h:commandLink>  
+            <p:graphicImage value="/resources/images/document-pdf-icone-6313-48.png" />  
+            <p:dataExporter type="pdf" target="tab1" fileName="competences"/>  
+        </h:commandLink>  
+          
+        <h:commandLink>  
+            <p:graphicImage value="/resources/images/CSV (3).png" />  
+            <p:dataExporter type="csv" target="tab1" fileName="competences" />  
+        </h:commandLink>  
+          
+        <h:commandLink>  
+            <p:graphicImage value= "/resources/images/document-xml-icone-9378-48.png"/>  
+            <p:dataExporter type="xml" target="tab1" fileName="competences" />  
+        </h:commandLink>  
+    </p:panel> 
+  
+
+        </p:panel>
+         </h:form>
+          
+		
+	</ui:define>
+</ui:composition>

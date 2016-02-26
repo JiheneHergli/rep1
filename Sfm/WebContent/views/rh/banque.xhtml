@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion RH</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+	<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		
+		<h:form id="form1">
+		 <p:growl id="messages" showDetail="true" />
+		 <p:spacer />
+
+
+			<p:fieldset legend="Nouveau Diplome " icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+				<p:ajax event="toggle" listener="#{diplomeBean.handleToggle()}" /> 
+		 
+				<p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="ddd">
+         <div align="center">
+         
+     <h:panelGrid columns="2" cellpadding="10">  
+                    
+                     
+                 <h:outputLabel  value="Nom" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{banqueBean.banque.nom}"  required="true"/>
+                
+        
+             <h:outputLabel  value="Email" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{banqueBean.banque.email}"  required="true"/>
+           
+            <h:outputLabel  value="Fax" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{banqueBean.banque.fax}"  required="true"/>
+           
+             <h:outputLabel  value="Telephone" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{banqueBean.banque.tel}"  required="true"/>
+           
+             <h:outputLabel  value="Adresse" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{banqueBean.banque.adresse}"  required="true"/>
+                    
+                    </h:panelGrid>
+                    </div>
+                    
+                    
+          </p:panel>
+            <p:commandButton value="save" icon="ui-icon-check"
+					action="#{banqueBean.valider()}" update=":form1:" style="color: #23A6DA;"  />
+
+	<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{BanqueBean.updatedip()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{BanqueBean.deletedip()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+			</p:fieldset>
+			
+			<p:spacer style="margin-bottom:3%;" />
+			    <p:dataTable id="table" value="#{banqueBean.lazyModel}"
+                         var="item" paginator="true" rows="5" emptyMessage=" "
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} 
+                         {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,50" selectionMode="single">
+                <p:ajax event="rowSelect" listener="#{banqueBean.onRowSelect()}" update="@form" />
+                <p:column headerText="ID" sortBy="#{item.idBanque}">
+                    <h:outputText value="#{item.idBanque}"/>
+                </p:column>
+                <p:column headerText="Name" sortBy="#{item.nom}">
+                    <h:outputText value="#{item.nom}" />
+                </p:column>
+                
+          
+					<f:facet name="footer">
+				
+                En total on a #{banqueBean.bc.size()} diplomes 
+              </f:facet>
+
+			</p:dataTable>
+              
+	</h:form>
+		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:comp="http://java.sun.com/jsf/composite/comp">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
+        <ui:define name="body">
+            <comp:confirmPanel id="delPanel"
+                               message="Voulez-vous supprimer cette ville?" title="Suppression"
+                               yes="Oui" no="Non"
+                               updateYes="@form"
+                               severity="alert" var="delPanel" beanYes="#{providerBean}"
+                               actionYes="supprimer" />
+            <h:panelGrid columns="30" cellspacing="0" cellpadding="0">
+                <p:spacer width="3"/>
+                <h:commandButton styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only button-new"
+                                 onmouseover="this.className = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only button-new ui-state-hover'"
+                                 onmouseout="this.className ='ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only button-new'"
+                                 onmousedown="this.className ='ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only button-new ui-state-active ui-state-focus'"
+                                 image="/resources/images/new.png"
+                                 id="new" title="Nouveau"
+                                 action="#{providerBean.init()}">
+                    <f:ajax execute="@this" render="@form"/>
+                    <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                </h:commandButton>
+                <p:spacer width="10"/>
+                <p:commandButton icon="icon-save" styleClass="button-save"
+                                 id="save" title="Sauvegarder"
+                                 action="#{providerBean.valider()}" 
+                                 update="@form"/>
+                <p:spacer width="10"/>
+                <p:commandButton icon="icon-close-delete"
+                                 styleClass="button-close-delete" id="delete"
+                                 title="Supprimer" onclick="delPanel.show()" type="button" />
+                <p:spacer width="10" />
+            </h:panelGrid>
+            <p:spacer height="15"/>
+            <p:growl id="messages" />
+         
+		  <p:growl id="growl" showDetail="true" />
+
+            <p:panel id="panel" header="#{i18n['provider']}">
+                <p:focus context="panel" />
+                <h:panelGrid columns="1">
+                    <p:fieldset legend="#{i18n['infogen']}" style="height: 320px">
+                        <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+
+                            <h:outputLabel for="id" value="#{i18n['id']} :" styleClass="label" />
+                            <p:inputText id="id" value="#{providerBean.provider.id}" size="25"
+                                         maxlength="40" >
+                            </p:inputText>
+
+                            <h:outputLabel for="nom" value="#{i18n['nom']} :"
+                                           styleClass="label" />
+                            <p:inputText id="nom" value="#{providerBean.provider.nom}"
+                                         size="25" maxlength="40" >
+                            </p:inputText>
+
+                            <h:outputLabel for="sigle" value="#{i18n['sigle']} :"
+                                           styleClass="label" />
+                            <p:inputText id="sigle" value="#{providerBean.provider.sigle}"
+                                         size="25" maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="matFiscal" value="#{i18n['matFiscal']} :"
+                                           styleClass="label" />
+                            <p:inputText id="matFiscal"
+                                         value="#{providerBean.provider.matFiscal}" size="25"
+                                         maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="codeSolv" value="#{i18n['codeSolv']} :"
+                                           styleClass="label" />
+                            <p:inputText id="codeSolv"
+                                         value="#{providerBean.provider.codeSolv}" size="25"
+                                         maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="dateEffet" value="#{i18n['dateEffet']} :"
+                                           styleClass="label" />
+                            <p:calendar id="dateEffet"
+                                        value="#{providerBean.provider.dateEffet}" pattern="dd/MM/yyyy"
+                                        mode="popup" showOn="button">
+                            </p:calendar>
+
+                            <h:outputLabel for="input" value="#{i18n['remise']} :"
+                                           styleClass="label" />
+                            <p:inputText id="input" value="#{providerBean.provider.remise}"
+                                         size="20" maxlength="20">
+                            </p:inputText>
+
+                            <h:outputLabel for="raisonSoc" value="#{i18n['raisonSoc']} :"
+                                           styleClass="label" />
+                            <p:inputText id="raisonSoc"
+                                         value="#{providerBean.provider.raisonSoc}" size="25"
+                                         maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="adresse" value="#{i18n['adresse']} :"
+                                           styleClass="label" />
+                            <p:inputText id="adresse" value="#{providerBean.provider.adresse}"
+                                         size="25" maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="city" value="#{i18n['ville']} :"
+                                           styleClass="label" />
+                            <p:autoComplete id="city" value="#{providerBean.currentVille}"
+                                            completeMethod="#{villeCombo.complete}" dropdown="true" size="20"
+                                            panelStyleClass="combo" 
+                                            label="#{i18n['provider']}" required="true">
+                            </p:autoComplete>
+
+                            <h:outputLabel for="telephone" value="#{i18n['telephone']} :"
+                                           styleClass="label" />
+                            <p:inputText id="telephone"
+                                         value="#{providerBean.provider.telephone}" size="25"
+                                         maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="fax" value="#{i18n['fax']} :"
+                                           styleClass="label" />
+                            <p:inputText id="fax" value="#{providerBean.provider.fax}"
+                                         size="25" maxlength="40">
+                            </p:inputText>
+
+                            <h:outputLabel for="responsable" value="#{i18n['responsable']} :"
+                                           styleClass="label" />
+                            <p:inputText id="responsable"
+                                         value="#{providerBean.provider.responsable}" size="25"
+                                         maxlength="40">
+                            </p:inputText>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:fieldset legend="#{i18n['totaux']}" style="height: 160px">
+
+                        <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+
+                            <h:outputLabel for="totalCreC" value="#{i18n['totalCreC']} :"
+                                           styleClass="label" />
+                            <p:inputText id="totalCreC"
+                                         value="#{providerBean.provider.totalCreC}" size="20"
+                                         maxlength="20">
+                            </p:inputText>
+                            <h:outputLabel for="totalDebC" value="#{i18n['totalDebC']} :"
+                                           styleClass="label" />
+                            <p:inputText id="totalDebC"
+                                         value="#{providerBean.provider.totalDebC}" size="20"
+                                         maxlength="20">
+                            </p:inputText>
+                            <h:outputLabel for="totalCreT" value="#{i18n['totalCreT']} :"
+                                           styleClass="label" />
+                            <p:inputText id="totalCreT"
+                                         value="#{providerBean.provider.totalCreT}" size="20"
+                                         maxlength="20">
+                            </p:inputText>
+                            <h:outputLabel for="totalDebT" value="#{i18n['totalDebT']} :"
+                                           styleClass="label" />
+                            <p:inputText id="totalDebT"
+                                         value="#{providerBean.provider.totalDebT}" size="20"
+                                         maxlength="20">
+                            </p:inputText>
+                            <h:outputLabel for="totalAvoir" value="#{i18n['totalAvoir']} :"
+                                           styleClass="label" />
+                            <p:inputText id="totalAvoir"
+                                         value="#{providerBean.provider.totalAvoir}" size="20"
+                                         maxlength="20">
+                            </p:inputText>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:panelGrid>
+            </p:panel>
+			
+            <p:dataTable id="table" value="#{providerBean.lazyModel}" var="item"
+                             paginator="true" rows="5" emptyMessage=" "
+                             paginatorPosition="bottom" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,50" selectionMode="single">
+                    <p:ajax event="rowSelect" listener="#{providerBean.onRowSelect}"
+                            update="@form" />
+                    <p:column headerText="#{i18n['id']}" sortBy="#{item.id}">
+                        <h:outputText value="#{item.id}" />
+                    </p:column>
+                    <p:column headerText="#{i18n['telephone']}"
+                              sortBy="#{item.telephone}">
+                        <h:outputText value="#{item.telephone}" />
+                    </p:column>
+                    <p:column headerText="#{i18n['responsable']}"
+                              sortBy="#{item.responsable}">
+                        <h:outputText value="#{item.responsable}" />
+                    </p:column>
+                    <p:column headerText="#{i18n['adresse']}" sortBy="#{item.adresse}">
+                        <h:outputText value="#{item.adresse}" />
+                    </p:column>
+                </p:dataTable>
+
+        </ui:define>
+    </ui:composition>
+</html>

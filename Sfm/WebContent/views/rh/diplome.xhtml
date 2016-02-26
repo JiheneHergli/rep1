@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion RH</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+	<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		
+		<h:form id="form1">
+		 <p:growl id="messages" showDetail="true" />
+		 <p:spacer />
+
+
+			<p:fieldset legend="Nouveau Diplome " icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+				<p:ajax event="toggle" listener="#{diplomeBean.handleToggle()}" />
+		 
+				<p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="ddd">
+         <div align="center">
+         
+     <h:panelGrid columns="2" cellpadding="10">  
+                    
+                     <h:outputLabel  value="Personnel" style="color: #23A6DA;font-size:20px"/>
+                    
+                 
+                 <p:selectOneMenu id="dip" value="#{diplomeBean.dip.person}" converter="#{personnelConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{personnelBean.personnels}" var="p" itemLabel="#{p.nom} #{p.prenom}" itemValue="#{p}" /> 
+</p:selectOneMenu> 
+             <h:outputLabel  value="Année" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{diplomeBean.dip.annee}"  required="true"/>
+           
+            <h:outputLabel  value="Dénomination" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{diplomeBean.dip.denomination}"  required="true"/>
+           
+             <h:outputLabel  value="Etablissement" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{diplomeBean.dip.etablissement}"  required="true"/>
+           
+             <h:outputLabel  value="Niveau" style="color: #23A6DA;font-size:20px"/>
+           <p:inputText  value="#{diplomeBean.dip.niveau}"  required="true"/>
+                    
+                    </h:panelGrid>
+                    </div>
+                    
+                    
+          </p:panel>
+            <p:commandButton value="save" icon="ui-icon-check"
+					action="#{diplomeBean.createdip()}" update=":form1:" style="color: #23A6DA;"  />
+
+	<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{diplomeBean.updatedip()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{diplomeBean.deletedip()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+			</p:fieldset>
+			
+			<p:spacer style="margin-bottom:3%;" />
+			<p:dataTable var="dip"
+				value="#{diplomeBean.dips}" rows="5" paginator="true"
+				 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				
+				id="ptable" selectionMode="single"
+				
+				 widgetVar="dipTable"
+				 
+				selection="#{diplomeBean.dipSelected}"
+				rowKey="#{dip.iddiplome}">
+				<p:ajax event="rowSelect"
+					listener="#{diplomeBean.onRowSelect(rowSelect)}"
+					update=":form1" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des diplomes de tous les personnels "  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('dipTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column  headerText="ID" filterBy="#{dip.iddiplome}" sortBy="#{dip.iddiplome}" filterMatchMode="exact" footerText=" ID exacte">
+                    <h:outputText value="#{dip.iddiplome}" />
+                </p:column>
+                <p:column headerText="Personnel " id="Nom" filterBy="#{dip.person.nom} #{dip.person.prenom}" sortBy="#{dip.person.nom} #{dip.person.prenom}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.person.nom} #{dip.person.prenom}" />
+                </p:column>
+
+                <p:column headerText="Année" filterBy="#{dip.annee}"  sortBy="#{dip.annee}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.annee}" />
+                </p:column>
+
+
+                <p:column headerText="Denomination" filterBy="#{dip.denomination}"  sortBy="#{dip.denomination}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.denomination}" />
+                </p:column>
+
+                <p:column headerText="Etablissement" filterBy="#{dip.etablissement}"  sortBy="#{dip.etablissement}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.etablissement}"  />
+                </p:column>
+
+    <p:column headerText="Niveau" filterBy="#{dip.niveau}"  sortBy="#{dip.niveau}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{dip.niveau}" />
+                </p:column>
+        
+					<f:facet name="footer">
+				
+                En total on a #{diplomeBean.dips.size()} diplomes 
+              </f:facet>
+
+			</p:dataTable>
+              
+	</h:form>
+		
+	</ui:define>
+</ui:composition>

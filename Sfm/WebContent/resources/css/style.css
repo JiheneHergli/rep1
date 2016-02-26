@@ -1,0 +1,98 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	background: #fff url("../resources/images/background_wave.jpg")
+		no-repeat;
+	background-size: 100% 300%;
+}
+
+header {
+	height: 40px;
+	width: 100%;
+
+		border-bottom: 3px solid #eee;
+}
+
+section {
+	min-height: 200px;
+	width: 84%;
+	float: right;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+}
+
+aside {
+	min-height: 400px;
+	width: 15%;
+	float: left;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+
+@media screen and (max-width: 1000px) {
+	body {
+		font-size: 12px;
+		margin: auto;
+		width: 99%;
+	}
+}
+
+.c-icon {
+	background: url("../resources/images/c.png") no-repeat !important;
+	height: 16px;
+	width: 16px;
+}
+
+.btn {
+  background: #3498db;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+.color1{
+	
+		background-color: #FFFF00 !important;
+		 color: black !important;
+
+}
+.color2 {
+       background-color: #00FF00 !important;
+
+
+}
+.color3 {
+	background-color: #FF0000 !important;
+	
+}
+
+
+.ui-corner-all {
+	border-radius: 20px 5px 20px 5px !important;
+	
+}
+
+.ui-watermark {
+	color: blue !important;
+	font-weight: normal !important;
+}
+.schedule{
+	background-color: #FF0000 !important;
+	
+}
+
+#container, #sliders {
+    min-width: 310px; 
+    max-width: 800px;
+    margin: 0 auto;
+}
+#container {
+    height: 400px; 
+}

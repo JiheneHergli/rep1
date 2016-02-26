@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>      
+<h:form>
+    <p:growl id="messages" showDetail="true" />
+ 
+  
+        <h3 style="margin-top: 0">planification des demandes </h3>
+        <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+ 
+            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
+            <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
+ 
+        </p:schedule>
+ 
+      
+    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+        <h:panelGrid id="eventDetails" columns="2">
+        
+                    <h:outputLabel  title="Nom" value="Nom:" style="color: #32789D;" />
+                    <h:inputText value="#{congBean.cong.personnel.nom}"   required="true"/>
+                    <h:outputLabel   value="Prenom:" style="color: #32789D;"/>
+                    <h:inputText value="#{congBean.cong.personnel.prenom}" id="prenom" required="true"/>
+                    <h:outputLabel   value="Cin:" style="color: #32789D;"  title="ecrire votre Cin"/>
+                    <h:inputText value="#{congBean.cong.personnel.cin}" required="true"/>
+  <h:outputLabel  value="Date début" style="color: #32789D;"/>
+                 
+  <p:calendar showOn="button" pattern="yyyy-mm-dd"
+							value="#{congBean.cong.date_debut}" effect="drop"  />
+							                    <h:outputLabel  value="Date Fin" style="color: #32789D;"/>
+                           <p:calendar showOn="button" pattern="yyyy-mm-dd"
+							value="#{congBean.cong.date_fin}" effect="drop"  />
+  <h:outputLabel  value="type de congé" style="color: #32789D;"/>
+                            
+             <p:selectOneMenu id="typs" value=""    widgetVar="typee"  converter="#{typecongeConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{typecongeBean.typeconges}" var="t" itemLabel="#{t.type}" itemValue="#{t}" /> 
+</p:selectOneMenu>  
+
+                    <h:outputLabel for="Fonction"  value="Fonction:" style="color: #32789D;"/>
+                    <h:inputText value="#{congBean.cong.personnel.emploi}" required="true"/>
+                      <h:outputLabel  value="departement:" style="color: #32789D;"/>
+                 
+               <p:selectOneMenu value="#{congBean.cong.personnel.departement}" >  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="Gestion" itemValue="1" />  
+            <f:selectItem itemLabel="Rehcherche et Développement" itemValue="2" />  
+            <f:selectItem itemLabel="Administration" itemValue="3" /> 
+            
+      
+             
+        </p:selectOneMenu>
+       
+   
+                    
+            
+                    <h:outputLabel  value="tél durant le congé" style="color: #32789D;"/>
+                 
+                    <h:inputText  value="#{congBean.cong.tel_durant_conge}"  required="true"/>
+        
+         
+               <h:outputLabel  value="adresse durant le congé" style="color: #32789D;"/>
+                 
+                    <h:inputText    value="#{congBean.cong.adresse_durant_conge}" required="true"/>
+    
+        
+     <p:commandButton  value="Save" actionListener="#{congBean.createcong()}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+       
+       <p:commandButton type="reset" value="Reset" />
+        
+        </h:panelGrid>
+        
+     
+    </p:dialog>    
+</h:form>
+
+       
+            
+
+	</ui:define>
+</ui:composition>

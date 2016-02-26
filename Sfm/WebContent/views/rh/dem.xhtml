@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion Ressource Humaine</ui:define>
+	</title>
+<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+	
+			<h:form id="form2"   >
+			
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+		<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+			
+			<p:fieldset legend="Nouvelle demande de sortie" icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500">
+
+				<p:panel  >
+				
+			<br></br>
+					<div align="center">
+					
+				 <p:clock pattern="HH:mm:ss dd.MM.yyyy"  />
+			
+				
+				</div>
+				<br></br>
+				
+		 <h:panelGrid columns="2" cellpadding="10"> 
+         
+             <h:outputLabel  value="Personnel" />
+                    
+                 
+ <p:selectOneMenu id="per" value="#{demandesortieBean.dem.personnel}" converter="#{personnelConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{personnelBean.personnels}" var="p" itemLabel="#{p.nom} #{p.prenom}" itemValue="#{p}" /> 
+</p:selectOneMenu> 
+                  
+
+                    <h:outputLabel  value="Heure de début " />
+                 
+                     <p:inputText  value="#{demandesortieBean.dem.heure_debut}"  required="true"/>
+					
+         
+                    <h:outputLabel  value="Heure de fin" />
+						     <p:inputText  value="#{demandesortieBean.dem.heure_fin}"  required="true"/>
+                               
+                    <h:outputLabel  value="tél" />
+                 
+                        <p:inputMask id="phone" value="#{demandesortieBean.dem.tel}"  required="true" mask="(+999) 99-999-999"/>
+       
+                    <h:outputLabel  value="adresse " />
+                 
+                    <p:inputText    value="#{demandesortieBean.dem.adresse}" required="true"/>
+         
+                      <h:outputLabel  value="desciption " />
+                 
+                   <p:inputTextarea rows="10"   value="#{demandesortieBean.dem.description}" cols="60"  />
+                   
+                    <h:outputLabel  value="etat"  />
+                 
+                  
+              <p:selectOneMenu value="#{demandesortieBean.dem.etat}" >  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="en cours" itemValue="en cours" />  
+            <f:selectItem itemLabel="validée" itemValue="validée" />  
+            <f:selectItem itemLabel="annulée" itemValue="annulée" /> 
+             
+        </p:selectOneMenu> 
+                   
+
+      </h:panelGrid>
+              	
+				</p:panel>
+							
+							
+<p:commandButton value="save" icon="ui-icon-check"  actionListener="#{demandesortieBean.createdem()}"   update=":form2:"  style="color: #23A6DA;"  />
+			
+			
+		
+<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					actionListener="#{demandesortieBean.updatedem()}" update=":form2:" style="color: #23A6DA;" />
+<p:commandButton value="Delete" icon="ui-icon-trash"
+					actionListener="#{demandesortieBean.deletedem()}" update=":form2:" style="color: #23A6DA;" />
+<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+</p:fieldset>
+	
+		<p:spacer style="margin-bottom:3%;" />
+
+			<p:dataTable var="dem"
+				value="#{demandesortieBean.dems}" rows="5" paginator="true"
+				id="ptable" selectionMode="single"
+				 widgetVar="demTable"
+				selection="#{demandesortieBean.demSelected}"
+				  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				rowKey="#{dem.iddem}"   rowStyleClass="#{demandesortieBean.color(dem.etat)}" >
+				
+				
+				<p:ajax event="rowSelect"
+					listener="#{demandesortieBean.onRowSelect(rowSelect)}"
+					update=":form2" />
+			
+ <f:facet name="header">
+  <h:outputText value="Liste des demandes de sortie"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('demTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+<p:column  headerText="ID" filterBy="#{dem.iddem}" sortBy="#{dem.iddem}"  filterMatchMode="exact" footerText=" ID exacte">
+<h:outputText value="#{dem.iddem}"  />
+ </p:column>
+
+
+
+
+ <p:column headerText="Date "  filterBy="#{dem.d1}" sortBy="#{dem.d1}"  filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{dem.d1}" >
+</h:outputText>      
+</p:column>
+
+
+
+                <p:column headerText="Nom"  filterBy="#{dem.personnel.nom}" sortBy="#{dem.personnel.nom}" filterMatchMode="exact" footerText="type exacte">
+         <h:outputText value="#{dem.personnel.nom}" />
+                </p:column>
+ <p:column headerText="Prenom"  filterBy="#{dem.personnel.prenom}" sortBy="#{dem.personnel.prenom}" filterMatchMode="exact" footerText="type exacte">
+ <h:outputText value="#{dem.personnel.prenom}" />
+ </p:column>
+ <p:column headerText="Fonction"  filterBy="#{dem.personnel.emploi}" sortBy="#{dem.personnel.emploi}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{dem.personnel.emploi}" />
+ </p:column>
+ <p:column headerText="Heure debut"  filterBy="#{dem.heure_debut}" sortBy="#{dem.heure_debut}"  filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{dem.heure_debut}" >
+</h:outputText>      
+</p:column>
+<p:column headerText="Heure fin "  filterBy="#{dem.heure_fin}" sortBy="#{dem.heure_fin}" filterMatchMode="exact" footerText="type exacte">
+<h:outputText value="#{dem.heure_fin}">
+</h:outputText>
+ </p:column>
+
+  <p:column headerText="Etat "  filterBy="#{dem.etat}" sortBy="#{dem.etat}" filterMatchMode="exact" footerText="type exacte">
+ <f:facet name="filter">
+ <p:selectOneMenu onchange="PF('demTable').filter()" >
+ <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+<f:selectItem itemLabel="en cours" itemValue="en cours" />  
+ <f:selectItem itemLabel="validée" itemValue="validée" />  
+  <f:selectItem itemLabel="annulée" itemValue="annulée" /> 
+</p:selectOneMenu>
+</f:facet>
+ <h:outputText value="#{dem.etat}" />
+</p:column>   
+    <p:column style="width:32px;text-align: center">
+             <p:commandButton  oncomplete="PF('demDialog').show()" icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{dem}" target="#{demandesortieBean.demSelected}" />
+            </p:commandButton>
+        </p:column>
+
+<f:facet name="footer">
+				
+                En total on a #{demandesortieBean.dems.size()} demandes 
+                
+              </f:facet>
+			</p:dataTable>
+
+		</h:form>			
+</ui:define>
+</ui:composition>

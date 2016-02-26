@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion RH</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+	<div style="background-color: #eee;height:50px;">
+		
+		</div>
+		<h:form></h:form>
+		<h:form id="form1">
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+		<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+
+			<p:fieldset legend="Nouvelle compétence" icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+				<p:ajax event="toggle" listener="#{competenceBean.handleToggle()}" />
+
+				<p:panel>
+				<h:panelGrid columns="2" cellspacing="5">
+                  <h:outputLabel  value="Libelle" style="color: #23A6DA;font-size:20px"/>
+           <p:spacer width="50" height="10" /> 
+                 
+                    <p:inputText   value="#{competenceBean.competence.libelle}" required="true"/>
+                          
+                      
+                    </h:panelGrid>
+				</p:panel>
+
+				<p:commandButton value="save" icon="ui-icon-check"
+					action="#{competenceBean.createcompetence()}" update=":form1 :form2" style="color: #23A6DA;"  />
+				<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{competenceBean.updateCompetence()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{competenceBean.deletecompetence()}" update=":form1:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+			</p:fieldset>
+			<p:spacer style="margin-bottom:3%;" />
+			
+			<p:dataTable var="comp"
+				value="#{competenceBean.competences}"  rows="5" paginator="true"
+				id="ptable" selectionMode="single"
+				 widgetVar="compTable"
+				  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+					selection="#{competenceBean.competenceSelected}"
+				rowKey="#{comp.idcompetence}" >
+				<p:ajax event="rowSelect"
+					listener="#{competenceBean.onRowSelect(rowSelect)}"
+					update=":form1" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des compétences"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('compTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+				<p:column  sortBy="#{comp.idcompetence}" filterBy="#{comp.idcompetence}">
+					       <f:facet name="header" >  
+            <h:outputText value="id" style =" color: #23A6DA" />  
+        </f:facet> 
+					<h:outputText value="#{comp.idcompetence}" />
+
+				</p:column>
+    <p:column 
+					sortBy="#{comp.libelle}" filterBy="#{comp.libelle}">
+					       <f:facet name="header" >  
+            <h:outputText value="Libelle" style =" color: #23A6DA" />  
+        </f:facet> 
+
+					<h:outputText value="#{comp.libelle}" />
+				</p:column>
+		
+				<f:facet name="footer">
+				
+                En total on a #{competenceBean.competences.size()} competences
+              </f:facet>
+
+
+			</p:dataTable>
+			
+			</h:form>
+		<h:form id="form2">
+		 <p:growl id="messages" showDetail="true" />
+		 <p:spacer />
+
+
+			<p:fieldset legend="Nouvelle  evaluation" icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500"  style="color: #23A6DA;"  >
+
+			
+		 
+				<p:panel  style ="color:#23A6DA;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:2px;" id="ddd">
+         <div align="center">
+         
+     <h:panelGrid columns="2" cellpadding="10">  
+         
+                     
+                     <h:outputLabel  value="Personnel" style="color: #23A6DA;font-size:20px"/>
+                    
+                 
+                 <p:selectOneMenu id="per" value="#{evaluationBean.eval.perso}" converter="#{personnelConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{personnelBean.personnels}" var="p" itemLabel="#{p.nom} #{p.prenom}" itemValue="#{p}" /> 
+</p:selectOneMenu> 
+                       <h:outputLabel  value="Date" style="color: #23A6DA;font-size:20px"/>
+          <p:calendar showOn="button" pattern="yyyy-mm-dd"
+							value="#{evaluationBean.eval.date}" effect="drop"  />
+                 
+              <h:outputLabel  value="compétence" style="color: #23A6DA;font-size:20px"/>
+        
+                 
+             <p:selectOneMenu id="comps" value="#{evaluationBean.eval.comp}" converter="#{competenceConverter}"> 
+<f:selectItem itemLabel="Select " itemValue="" /> 
+<f:selectItems value="#{competenceBean.competences}" var="c" itemLabel="#{c.libelle}" itemValue="#{c}" /> 
+</p:selectOneMenu>  
+          
+       
+                       <h:outputLabel  value="Note" style="color: #23A6DA;font-size:20px"/>
+                       
+             <p:rating value="#{evaluationBean.eval.note}"  stars="10">
+            <p:ajax event="rate" listener="#{evaluationBean.onrate}" update="messages" />
+            <p:ajax event="cancel" listener="#{evaluationBean.oncancel}" update="messages" />
+        </p:rating>
+                       <h:outputLabel  value="Commentaire" style="color: #23A6DA;font-size:20px"/>
+                    
+                      <p:inputTextarea rows="6" cols="80"  value="#{evaluationBean.eval.commentaire}"  id="keyword"/>  
+                       <p:watermark for="keyword" value="saisir un commentaire" />  
+                    </h:panelGrid>
+                    </div>
+                    
+                    
+          </p:panel>
+            <p:commandButton value="save" icon="ui-icon-check"
+					action="#{evaluationBean.createeval()}" update=":form2:" style="color: #23A6DA;"  />
+
+	<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w"
+					action="#{evaluationBean.updateeval()}" update=":form2:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+					action="#{evaluationBean.deleteeval()}" update=":form2:" style="color: #23A6DA;" />
+				<p:button type="Reset" icon="ui-icon-refresh" value="Reset"  style="color: #23A6DA;"/>
+
+			</p:fieldset>
+			
+			<p:spacer style="margin-bottom:3%;" />
+			<p:dataTable var="eval"
+				value="#{evaluationBean.evals}" rows="5" paginator="true"
+				 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				
+				id="ptable" selectionMode="single"
+				
+				 widgetVar="evalTable"
+				 
+				selection="#{evaluationBean.evalSelected}"
+				rowKey="#{eval.ideval}">
+				<p:ajax event="rowSelect"
+					listener="#{evaluationBean.onRowSelect(rowSelect)}"
+					update=":form2" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des evaluations"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('evalTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+			 <p:column id="typecongeId" headerText="ID" filterBy="#{eval.ideval}" sortBy="#{eval.ideval}" filterMatchMode="exact" footerText=" ID exacte">
+                    <h:outputText value="#{eval.ideval}" />
+                </p:column>
+                <p:column headerText="Nom" id="Nom" filterBy="#{eval.perso.nom}"  sortBy="#{eval.perso.nom}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{eval.perso.nom}" />
+                </p:column>
+
+                <p:column headerText="Note" id="typecongedes" filterBy="#{eval.note}"  sortBy="#{eval.note}"  filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{eval.note}" />
+                </p:column>
+
+                <p:column headerText="Date" filterBy="#{eval.date}"  sortBy="#{eval.date}" filterMatchMode="exact" footerText="type exacte">
+           <h:outputText value="#{eval.date}" >
+     
+            </h:outputText>
+                </p:column>
+
+                <p:column headerText="Commentaire" filterBy="#{eval.commentaire}"  sortBy="#{eval.commentaire}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{eval.commentaire}" />
+                </p:column>
+ <p:column headerText="Competence" filterBy="#{eval.comp.libelle}" sortBy="#{eval.comp.libelle}" filterMatchMode="exact" footerText="type exacte">
+                    <h:outputText value="#{eval.comp.libelle}" />
+                </p:column>
+
+
+        
+					<f:facet name="footer">
+				
+                En total on a #{evaluationBean.evals.size()} evaluations 
+              </f:facet>
+
+			</p:dataTable>
+              
+	</h:form>
+	</ui:define>
+</ui:composition>

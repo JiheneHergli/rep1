@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<ui:composition template="/template/dispatch.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<title><ui:define name="title">Gestion RH</ui:define>
+	</title>
+
+	<ui:define name="header">
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form1">
+			<p:growl id="msgs" showDetail="true" />
+			<p:spacer />
+			<p:growl id="messages" showDetail="true" />
+		<p:spacer />
+			<p:growl id="messags" showDetail="true" />
+
+			<p:fieldset legend="Nouvelle compétence" icon="ui-icon-document" toggleable="true"
+				toggleSpeed="500">
+
+				<p:ajax event="toggle" listener="#{competenceBean.handleToggle()}" />
+
+				<p:panel>
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Libelle">
+						</p:outputLabel>
+						<p:inputText value="#{competenceBean.competence.libelle}"></p:inputText>
+						
+					</p:panelGrid>
+				</p:panel>
+
+				<p:commandButton value="save" icon="ui-icon-check"
+					action="#{competenceBean.createcompetence()}" update=":form1:" style="color: #23A6DA;"  />
+				<p:commandButton value="update" icon="ui-icon-arrowrefresh-1-w" 
+					action="#{competenceBean.updateCompetence()}" update=":form1:" style="color: #23A6DA;" />
+				<p:commandButton value="Delete" icon="ui-icon-trash"
+action="#{competenceBean.deletecompetence()}" update=":form1:" style="color: #23A6DA;" />
+					
+
+			</p:fieldset> 
+			<p:spacer style="margin-bottom:3%;" />
+			<p:dataTable var="competence"
+				value="#{competenceBean.competences}" rows="5" paginator="true"
+				 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,15"
+				id="ptable" selectionMode="single"
+				 widgetVar="CompetenceTable"
+				selection="#{competenceBean.competenceSelected}"
+				rowKey="#{competence.idcompetence}">
+				<p:ajax event="rowSelect"
+					listener="#{competenceBean.onRowSelect(rowSelect)}"
+					update=":form1" />
+			
+                     <f:facet name="header">
+                            <h:outputText value="Liste des compétences"  style =" color: #F0AF18;font-size:12pt;text-align: center;" /> 
+                 
+                    <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('CompetenceTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+             
+                     </f:facet>
+				<p:column  sortBy="#{competence.idcompetence}" filterBy="#{competence.idcompetence}">
+					       <f:facet name="header" >  
+            <h:outputText value="id" style =" color: #23A6DA" />  
+        </f:facet> 
+					<h:outputText value="#{competence.idcompetence}" />
+
+				</p:column>
+				<p:column 
+					sortBy="#{competence.libelle}" filterBy="#{competence.libelle}">
+					       <f:facet name="header" >  
+            <h:outputText value="Libelle" style =" color: #23A6DA" />  
+        </f:facet> 
+
+					<h:outputText value="#{competence.libelle}" />
+				</p:column>
+		
+				<f:facet name="footer">
+				
+                En total on a #{competenceBean.competences.size()} competences
+              </f:facet>
+
+			</p:dataTable>
+			
+	
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

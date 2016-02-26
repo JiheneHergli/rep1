@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SFM"  transaction-type="RESOURCE_LOCAL">
+	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	<class>com.sfm.erp.model.Proposition</class>
+	<class>com.sfm.erp.model.Offre</class>
+	<class>com.sfm.erp.model.Compte</class>
+	<class>com.sfm.erp.model.Client</class>
+	<class>com.sfm.erp.model.Banque</class>
+	<class>com.sfm.erp.model.SFM</class>
+	<class>com.sfm.erp.model.Formation</class>
+	<class>com.sfm.erp.model.Relance</class>
+	<class>com.sfm.erp.model.Competence</class>
+	<class>com.sfm.erp.model.Theme</class>
+	<class>com.sfm.erp.model.Departement</class>
+	<class>com.sfm.erp.model.Typeconge</class>
+	<class>com.sfm.erp.model.Personnel</class>
+	<class>com.sfm.erp.model.Evaluation</class>
+	<class>com.sfm.erp.model.Cong</class>
+	<class>com.sfm.erp.model.Event</class>
+	<class>com.sfm.erp.model.Emploiprecedent</class>
+	<class>com.sfm.erp.model.Diplome</class>
+	<class>com.sfm.erp.model.Consultant</class>
+	<class>com.sfm.erp.model.Document</class>
+	<class>com.sfm.erp.model.Demandesortie</class>
+	<class>com.sfm.erp.model.Notification</class>
+	</persistence-unit>
+</persistence>

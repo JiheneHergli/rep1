@@ -1,0 +1,5 @@
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/SFM/JavaSource/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/SFM/WebContent/WEB-INF/spring/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/Sfm/JavaSource/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/Sfm/WebContent/WEB-INF/spring/root-context.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+eclipse.preferences.version=1
